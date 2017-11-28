@@ -1,0 +1,19 @@
+query FindBookById($bookId: Int!) {
+  book(id: $bookId) {
+    id
+    title
+    author {
+      firstName
+      lastName
+    }
+    ratings {
+      stars
+      comment
+    }
+  }
+}
+
+# Variables
+{
+  "bookId": 1
+}

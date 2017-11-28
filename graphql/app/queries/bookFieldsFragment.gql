@@ -1,0 +1,18 @@
+fragment bookFields on Book {
+  title
+  price
+  author {
+    firstName
+    lastName
+  }
+  ratings {
+    stars
+    comment
+  }
+}
+
+query findBooksWithFragment {
+  books {
+    ...bookFields
+  }
+}

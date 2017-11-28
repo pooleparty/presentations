@@ -1,0 +1,19 @@
+mutation CreateRatingForBook($bookId: Int!, $rating: RatingInput!) {
+  createRating(bookId: $bookId, rating: $rating) {
+    stars
+    comment
+    book {
+      title
+      ratings
+    }
+  }
+}
+
+# Variables
+{
+	"bookId": 1,
+  "rating": {
+    "stars": 5,
+    "comment": "Amazing, 5/7"
+  }
+}

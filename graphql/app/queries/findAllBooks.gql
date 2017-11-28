@@ -1,0 +1,14 @@
+{
+  books {
+    id
+    title
+    author {
+      firstName
+      lastName
+    }
+    ratings {
+      stars
+      comment
+    }
+  }
+}
