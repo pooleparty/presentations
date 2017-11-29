@@ -4,6 +4,11 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "clean": "rimraf bin",
+    "prebuild": "npm run clean",
+    "build": "babel src -d bin",
+    "prestart": "npm run build",
+    "start": "node bin/server.js",
     "dev": "nodemon ./devServer.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -20,7 +25,8 @@
     "graphiql": "^0.11.10",
     "graphql": "^0.11.7",
     "graphql-tools": "^2.9.0",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "rimraf": "^2.6.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
