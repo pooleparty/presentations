@@ -1,6 +1,7 @@
 fragment bookFields on Book {
   title
   price
+  publishDate
   author {
     firstName
     lastName

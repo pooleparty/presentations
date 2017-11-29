@@ -1,6 +1,7 @@
 import { find, filter } from 'lodash';
 import express from 'express';
 import bodyParser from 'body-parser';
+import { GraphQLScalarType } from 'graphql';
 import graphqlHTTP from 'express-graphql';
 import { makeExecutableSchema } from 'graphql-tools';
 import books from './books';
@@ -22,6 +23,7 @@ type Book {
   price(currency: Currency = USD): Float
   author: Author
   ratings: [Rating]
+  publishDate: Date
 }
 
 type Author {
@@ -42,6 +44,8 @@ enum Currency {
   EUR
 }
 
+scalar Date
+
 type Mutation {
   createRating(bookId: Int!, rating: RatingInput!): Rating
 }
@@ -51,6 +55,26 @@ input RatingInput {
   comment: String
 }
 `;
+
+const dateScalar = new GraphQLScalarType({
+  name: 'Date',
+  description: 'Custom date scalar type',
+  serialize(date) {
+    // Implement your own behavior here by setting the 'result' variable
+    const result = date.toISOString();
+    return result;
+  },
+  parseValue(date) {
+    // Implement your own behavior here by setting the 'result' variable
+    const result = new Date(date);
+    return result;
+  },
+  parseLiteral(ast) {
+    // Implement your own behavior here by returning what suits your needs
+    // depending on ast.kind
+    return new Date(ast.value);
+  },
+});
 
 const resolvers = {
   Query: {
@@ -76,7 +100,7 @@ const resolvers = {
   },
   Mutation: {
     createRating: (obj, args, context) => {
-      const rating = { bookId: args.bookId, ...args.rating};
+      const rating = { bookId: args.bookId, ...args.rating };
       context.db.ratings.push(rating);
       return rating;
     },
@@ -90,7 +114,7 @@ const resolvers = {
     ratings: (book, args, context) => {
       return filter(context.db.ratings, { bookId: book.id });
     },
-    price: (book, args, context) => {
+    price: (book, args) => {
       if (args.currency === 'EUR') {
         return book.price * 0.84;
       }
@@ -107,6 +131,7 @@ const resolvers = {
       return find(context.db.books, { id: rating.bookId });
     },
   },
+  Date: dateScalar,
 };
 
 const builtSchema = makeExecutableSchema({
