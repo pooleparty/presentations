@@ -8,6 +8,7 @@ import books from './books';
 import authors from './authors';
 import ratings from './ratings';
 
+// Schema definition
 const schema = `
 type Query {
   books: [Book]
@@ -56,6 +57,7 @@ input RatingInput {
 }
 `;
 
+// Define implementation for custom date scalar
 const dateScalar = new GraphQLScalarType({
   name: 'Date',
   description: 'Custom date scalar type',
@@ -76,6 +78,7 @@ const dateScalar = new GraphQLScalarType({
   },
 });
 
+// Defined query, mutation, and object field resolvers
 const resolvers = {
   Query: {
     books: (obj, args, context) => {
@@ -134,41 +137,49 @@ const resolvers = {
   Date: dateScalar,
 };
 
+// Combine schema and resolvers into executable schema
 const builtSchema = makeExecutableSchema({
   typeDefs: [schema],
   resolvers,
 });
 
+// Temp "Database" to be passed as context to each resolver
 const db = {
   books,
   authors,
   ratings,
 };
 
+// Helper fucntion for setting up routes
 function graphql(graphiql) {
-  return graphqlHTTP(() =>
-    // const startTime = Date.now();
-    ({
+  return graphqlHTTP(() => {
+    const startTime = Date.now();
+    return ({
       schema: builtSchema,
       graphiql,
       context: {
         db,
       },
-      // extensions() {
-      //   return {
-      //     runTime: Date.now() - startTime
-      //   };
-      // }
-    }));
+      extensions() {
+        return {
+          runTime: Date.now() - startTime,
+        };
+      },
+    });
+  });
 }
 
+// Setup express app
 const app = express();
 
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => res.redirect('/graphql'));
 
+// Get request shows graphiql UI
 app.get('/graphql', graphql(true));
+
+// Post requests get sent to GraphQL engine to get executed
 app.post('/graphql', graphql(false));
 
 export default app;
