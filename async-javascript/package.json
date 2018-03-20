@@ -1,0 +1,23 @@
+{
+  "name": "async-javascript",
+  "version": "1.0.0",
+  "description": "https://github.com/getify/You-Dont-Know-JS/tree/master/async%20%26%20performance",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "start": "reveal-md slides.md -w --theme night",
+    "lint": "eslint . '**/.*.js'",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "eslint": "^4.19.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.9.0",
+    "reveal-md": "^1.1.3"
+  }
+}
