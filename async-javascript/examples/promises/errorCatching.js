@@ -1,7 +1,10 @@
+/* eslint-disable no-undef */
+/* eslint-disable function-paren-newline */
+
 function request(url) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(((resolve, reject) => {
     setTimeout(resolve, 500);
-  });
+  }));
 }
 
 // What if something went wrong in one of the steps of the Promise chain?
@@ -10,29 +13,29 @@ function request(url) {
 // to sort of "reset" the chain back to normal operation at that point:
 
 // step 1:
-request("http://some.url.1/")
+request('http://some.url.1/')
   // step 2:
-  .then(function(response1) {
+  .then((response1) => {
     foo.bar(); // undefined, error!
 
     // never gets here
-    return request("http://some.url.2/?v=" + response1);
+    return request(`http://some.url.2/?v=${response1}`);
   })
 
   // step 3:
   .then(
-    function fulfilled(response2) {
+    (response2) => {
       // never gets here
     },
     // rejection handler to catch the error
-    function rejected(err) {
+    (err) => {
       console.log(err); // `TypeError` from `foo.bar()` error
       return 42;
-    }
+    },
   )
 
   // step 4:
-  .then(function(msg) {
+  .then((msg) => {
     console.log(msg); // 42
   });
 
@@ -43,16 +46,15 @@ request("http://some.url.1/")
 
 function implicitRejectionHandler() {
   // If you call then(..) on a promise, and you only pass a fulfillment handler to it,
-  //an assumed rejection handler is substituted:
+  // an assumed rejection handler is substituted:
 
-  var p = new Promise(function(resolve, reject) {
-    reject("Oops");
-  });
+  const p = new Promise(((resolve, reject) => {
+    reject(new Error('Oops'));
+  }));
 
-  var p2 = p.then(
-    function fulfilled() {
-      // never gets here
-    }
+  const p2 = p.then(() => {
+    // never gets here
+  },
     // assumed rejection handler, if omitted or
     // any other non-function value passed
     // function(err) {
@@ -65,7 +67,7 @@ function implicitResolutionHandler() {
   // If a proper valid function is not passed as the fulfillment handler
   // parameter to then(..), there's also a default handler substituted:
 
-  var p = Promise.resolve(42);
+  const p = Promise.resolve(42);
 
   p.then(
     // assumed fulfillment handler, if omitted or
@@ -74,8 +76,8 @@ function implicitResolutionHandler() {
     //     return v;
     // }
     null,
-    function rejected(err) {
+    (err) => {
       // never gets here
-    }
+    },
   );
 }

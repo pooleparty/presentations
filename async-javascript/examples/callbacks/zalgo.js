@@ -3,14 +3,14 @@ function ajaxSync(url, callback) {
   callback();
 }
 
-var a = 0;
+let a = 0;
 
 function resultA(data) {
   console.log('A', a);
 }
 
-ajaxSync("..pre-cached-url..", resultA);
-a++;
+ajaxSync('..pre-cached-url..', resultA);
+a += 1;
 
 // ================================================
 
@@ -19,11 +19,11 @@ function ajaxAsync(url, callback) {
   setTimeout(callback, 1000);
 }
 
-var b = 0;
+let b = 0;
 
 function resultB(data) {
   console.log('B', b);
 }
 
-ajaxAsync("..non-cached-url..", resultB);
-b++;
+ajaxAsync('..non-cached-url..', resultB);
+b += 1;
