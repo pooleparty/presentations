@@ -1,19 +1,28 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import tws from './tweet';
 import Title from './title';
-const tws = require('./tweet');
+import { App } from './propTypes';
+
 
 class CardRight extends Component {
+  static propTypes = {
+    name: PropTypes.string.isRequired,
+    app: App.isRequired,
+  };
+
   render() {
+    const { name, app } = this.props;
     return (
       <div className="col-right">
         <div className="app-meta">
-          <Title name={this.props.name} publisher={this.props.app.publisher} />
-          <span className="app-lic">{this.props.app.price}</span>
+          <Title name={name} publisher={app.publisher} />
+          <span className="app-lic">{app.price}</span>
         </div>
-        <div className="app-intro" dangerouslySetInnerHTML={{ __html: this.props.app.desc }} />
+        <div className="app-intro" dangerouslySetInnerHTML={{ __html: app.desc }} />
         <hr />
         <div className="app-link">
-          <a className="btn" href={this.props.app.link} target="_blank">
+          <a className="btn" href={app.link} target="_blank">
             Get App
           </a>
           <a
@@ -21,8 +30,8 @@ class CardRight extends Component {
             className="btn btn-twitter"
             title="Share on Twitter"
             rel="nofollow"
-            onClick={e => {
-              tws(this.props.app.tweet);
+            onClick={(e) => {
+              tws(app.tweet);
               e.preventDefault();
             }}
           >

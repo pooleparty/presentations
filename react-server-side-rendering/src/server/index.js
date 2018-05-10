@@ -8,11 +8,11 @@ const app = express();
 app.use('/public', express.static(path.resolve(__dirname, '../../public')));
 
 // our apps data model
-const data = require('../../public/data/data.json');
+const apps = require('../../public/data/data.json');
 
 const initialState = {
   isFetching: false,
-  apps: data,
+  apps,
 };
 
 // SSR function import
@@ -20,8 +20,8 @@ const renderer = require('./renderer');
 
 // server rendered home page
 app.get('/', (req, res) => {
-  const { preloadedState, content } = renderer(initialState);
-  const response = template('Server Rendered Page', preloadedState, content);
+  const content = renderer(initialState);
+  const response = template('Server Rendered Page', initialState, content);
   res.setHeader('Cache-Control', 'public, max-age=604800');
   res.send(response);
 });

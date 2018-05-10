@@ -1,33 +1,38 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class CardLeft extends Component {
-  numbersLeadingZero(props) {
+  static propTypes = {
+    appNumber: PropTypes.number.isRequired,
+    totalApps: PropTypes.number.isRequired,
+    img: PropTypes.shape({
+      src: PropTypes.string.isRequired,
+      alt: PropTypes.string.isRequired,
+    }).isRequired,
+  };
+
+  numbersLeadingZero({ appNumber, className }) {
     let count = 0;
-    if (props.appno < 10) {
-      count = ('0' + props.appno).slice(-2);
+    if (appNumber < 10) {
+      count = `0${appNumber}`.slice(-2);
     } else {
-      count = props.appno;
+      count = appNumber;
     }
-    return <span className={props.withclass}>{count}</span>;
+    return <span className={className}>{count}</span>;
   }
 
   render() {
+    const { appNumber, totalApps, img } = this.props;
     return (
       <div className="col-left">
         <div className="app-no">
-          <this.numbersLeadingZero appno={this.props.appno} withclass="current" />
+          <this.numbersLeadingZero appNumber={appNumber} className="current" />
           <span className="connector">of </span>
           <br />
-          <this.numbersLeadingZero appno={this.props.totalapps} withclass="total" />
+          <this.numbersLeadingZero appNumber={totalApps} className="total" />
         </div>
 
-        <img
-          className="app-icon"
-          src={this.props.img.src}
-          alt={this.props.img.alt}
-          height="120"
-          width="120"
-        />
+        <img className="app-icon" src={img.src} alt={img.alt} height="120" width="120" />
       </div>
     );
   }
