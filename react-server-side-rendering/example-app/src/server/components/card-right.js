@@ -4,7 +4,6 @@ import tws from './tweet';
 import Title from './title';
 import { App } from './propTypes';
 
-
 class CardRight extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,

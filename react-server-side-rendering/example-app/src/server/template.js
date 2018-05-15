@@ -1,4 +1,12 @@
-// html skeleton provider
+/**
+ * HTML Skeleton Template
+ *
+ * Could also use a server side templating engine (e.g. Pug, Jade, etc.)
+ *
+ * @param {String} title Page title
+ * @param {Object} state Initial application state
+ * @param {String} content HTML content
+ */
 function template(title, state = {}, content = '') {
   let scripts = '';
   if (content) {
