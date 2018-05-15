@@ -2,4 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import App from '../server/components/app';
 
-render(<App />, document.querySelector('#app'));
+const app = <App />;
+const domNode = document.querySelector('#app');
+
+render(app, domNode);

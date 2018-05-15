@@ -11,7 +11,6 @@ app.use('/public', express.static(path.resolve(__dirname, '../../public')));
 const apps = require('../../public/data/data.json');
 
 const initialState = {
-  isFetching: false,
   apps,
 };
 
@@ -22,14 +21,12 @@ const renderer = require('./renderer');
 app.get('/', (req, res) => {
   const content = renderer(initialState);
   const response = template('Server Rendered Page', initialState, content);
-  res.setHeader('Cache-Control', 'public, max-age=604800');
   res.send(response);
 });
 
 // Pure client side rendered page
 app.get('/client', (req, res) => {
   const response = template('Client Side Rendered page');
-  res.setHeader('Cache-Control', 'public, max-age=604800');
   res.send(response);
 });
 

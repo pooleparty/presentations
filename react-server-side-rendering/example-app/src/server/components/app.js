@@ -17,7 +17,7 @@ class App extends Component {
 
     this.state = {
       isFetching: false,
-      apps: this.props.apps || [],
+      apps: this.props.apps,
     };
   }
 

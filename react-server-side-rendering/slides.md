@@ -17,7 +17,7 @@ This also means that crawlers may interpret your page as empty.
 
 ---
 
-![CSR](./public/images/csr.png)
+![CSR](./images/csr.png)
 
 ---
 
@@ -38,7 +38,7 @@ Now the user does not have to wait for the JS to load and gets a fully rendered 
 
 ---
 
-![SSR](./public/images/ssr.png)
+![SSR](./images/ssr.png)
 
 Notes:
 
