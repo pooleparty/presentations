@@ -10,7 +10,7 @@
   "scripts": {
     "lint": "eslint . '**/.*.js'",
     "lint:fix": "npm run lint -- --fix",
-    "start": "PORT=3001 node build/server/index.js",
+    "start": "node build/server/index.js",
     "dev": "run-p -l -n dev:*",
     "dev:server": "nodemon devServer.js",
     "dev:client": "npm run build:client -- --watch",
