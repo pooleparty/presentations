@@ -1,0 +1,5 @@
+node_modules
+.DS_Store
+styles/sass
+build
+public/scripts
