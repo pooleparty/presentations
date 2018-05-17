@@ -4,10 +4,10 @@ function template(title, state = {}, content = '') {
     scripts = ` <script>
                    window.__STATE__ = ${JSON.stringify(state)}
                 </script>
-                <script src="public/scripts/client.js"></script>
+                <script src="public/scripts/clientSSR.js"></script>
                 `;
   } else {
-    scripts = ' <script src="public/scripts/bundle.js"> </script> ';
+    scripts = ' <script src="public/scripts/clientCSR.js"> </script> ';
   }
   const page = `<!DOCTYPE html>
               <html lang="en">
