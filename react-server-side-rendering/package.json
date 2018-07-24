@@ -5,7 +5,7 @@
     "slides": "reveal-md slides.md --theme simple --css style.css",
     "startSlides": "npm run slides -- -w",
     "clean": "rimraf ../docs/react-server-side-rendering",
-    "mkdir": "mkdir ../docs/react-server-side-rendering",
+    "mkdir": "mkdir -p ../docs/react-server-side-rendering",
     "pregenerateStaticSite": "run-s -l -n clean mkdir",
     "generateStaticSite": "npm run slides -- --static ../docs/react-server-side-rendering"
   },
