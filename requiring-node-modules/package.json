@@ -1,0 +1,26 @@
+{
+  "name": "requiring-node-modules",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "slides": "big-presentation-compose",
+    "startSlides": "big-presentation-serve",
+    "clean": "rimraf ../docs/requiring-node-modules",
+    "mkdir": "mkdir -p ../docs/requiring-node-modules",
+    "pregenerateStaticSite": "run-s -l -n clean mkdir",
+    "generateStaticSite": "big-presentation-offline",
+    "postgenerateStaticSite": "mv index.offline.html ../docs/requiring-node-modules/index.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "npm-run-all": "^4.1.3",
+    "reveal-md": "^2.0.6",
+    "rimraf": "^2.6.2"
+  },
+  "dependencies": {
+    "big-presentation": "^3.4.1"
+  }
+}
