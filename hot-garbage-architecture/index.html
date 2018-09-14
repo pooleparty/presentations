@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+  <title>big</title>
+  <link href='big.css' rel='stylesheet' type='text/css' />
+  <link href='highlight.css' rel='stylesheet' type='text/css' />
+  <style>
+    .new-shiny {
+      background: #aaaaaa;
+    }
+
+    .center {
+      margin: 0 auto;
+      text-align: center;
+    }
+  </style>
+  <script src='big.js'></script>
+  <script src='highlight.js'></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+<body class='dark'>
+  <div>
+    <h1>Hot Garbage Architecture</h1>
+    <h4>clean code is dead</h4>
+  </div>
+  <div>
+    <h1>4️⃣ tenants of Hot Garbage Architecture</h1>
+    <notes>These are not hard and fast rules, just things to think about to help keep code pliable.
+  </div>
+  <div>
+    <h1>pliable</h1>
+    <notes>
+      Biggest enemy of this tenant is speculative generality.
+      We build things that we assume will stand the test of time instead of creating the things that we need for right
+      now and see how it evolves.
+    </notes>
+  </div>
+  <div>
+    <h1>DRY code is dead code</h1>
+    <notes>
+      Playdoh example.
+      Pliable doh is easy to work with and change.
+      Dried doh is difficult to shape and cracks/breaks when pushed to change. Needs to be rehydrated in order to
+      change shape.
+
+      As developers, we like to have hard and fast rules for the ways we develop, but there are no universal rules.
+      There are no rules that can be applied to every situation.
+
+      There is a context for the rules and patterns we like to follow.
+    </notes>
+  </div>
+  <div>
+    <table>
+      <tr>
+        <td class="center">know
+          <div style="font-size: 6rem;">stable</div>
+        </td>
+        <td>
+          <div class="center" style="font-size: 6rem; width: 250px;">vs</span>
+        </td>
+        <td class="center">don't know
+          <div style="font-size: 6rem;">unstable</div>
+        </td>
+      </tr>
+    </table>
+    <notes>
+      There are things that we know that need to be stable or become stable over time.
+      The things that we don't know are things that need to stay pliable.
+
+      We get into trouble when we try to apply rules across this distinction.
+
+      DRY code is good for stable code, but when applied to things we don&#39;t know that need to change often, DRY
+      principles can prove to be more harmful that helpful.
+      Readability is high value for code that changes all the time, but is not as important for stable code.
+      Performance may trump readabiltiy for stable code.
+    </notes>
+  </div>
+  <div class="center">
+    <div>
+      ⛳
+    </div>
+    <div>
+      hole in one odds
+    </div>
+    <notes>
+      This is like optimizing your golf game around getting holes in one.
+      I don't need to become a better golfer (developer) if I can just get more holes in one (building things right
+      the first time).
+      SG creates this idea that we can get something correct the first time and not have to worry about it in the
+      future.
+    </notes>
+  </div>
+  <div>
+    <h1>composable</h1>
+    <notes>
+      Prefer components over configuration
+    </notes>
+  </div>
+  <div style="width: 65%; margin: 0 auto;">
+    <img src='./images/too_many_props_1.png' />
+    <notes>
+      Every props in this component adds some level of configuration and makes the component very opinionated and hard
+      to change.
+    </notes>
+  </div>
+  <div style="width: 65%; margin: 0 auto;">
+    <img src='./images/too_many_props_2.png' />
+  </div>
+  <div style="width: 65%; margin: 0 auto;">
+    <img src='./images/too_many_props_3.png' />
+  </div>
+  <div>
+    <h1>reasonable</h1>
+    <notes>
+      Reasonable vs nonreasonable.
+      Realistic vs speculative
+    </notes>
+  </div>
+  <div class="center">
+    <div>
+      ☔
+    </div>
+    <div style="font-size: 8rem;">reasonable</div>
+  </div>
+  <div class="center">
+    <div>
+      ☂️
+    </div>
+    <div style="font-size: 8rem">unreasonable</div>
+  </div>
+  <div class="center">
+    <div>
+      ☔
+    </div>
+    <div style="font-size: 8rem;">realistic</div>
+  </div>
+  <div class="center">
+    <div>
+      ☂️
+    </div>
+    <div style="font-size: 8rem">speculative</div>
+  </div>
+  <div class="center">
+    <div>
+      ☔
+    </div>
+    <div style="font-size: 8rem; ">timely perf-optimized</div>
+  </div>
+  <div class="center">
+    <div>
+      ☂️
+    </div>
+    <div style="font-size: 8rem">perf always</div>
+  </div>
+  <div class="center">
+    <img src="./images/complexity_vs_churn.png" />
+    <span>https://matthiasnoback.nl/2018/01/churn-legacy-code/</span>
+    <notes>
+      Look at your code in terms of churn versus complexity.
+
+      Don't be eager to refactor code that is stable and has not been touched in a while.
+
+      If churn is low and complexity is high or churn is high but complexity is low, don't touch it.
+
+      Look for outliers with high churn and high complexity.
+    </notes>
+  </div>
+  <div>
+    <h1 id="disposable">disposable</h1>
+  </div>
+  <div>
+    <quote>
+      "When you add code, ask how easily it'll be removed when you realize you're wrong."
+      - Will Wilson
+    </quote>
+  </div>
+  <div>
+    <h1>
+      interface over implementation
+    </h1>
+    <notes>
+      Don't get caught up in the implementation of a component.
+
+      Think more about the interface of said component and how difficult or easy it will be to swap out in the future.
+    </notes>
+  </div>
+  <div>
+    <h1>
+      we aren't builders
+    </h1>
+    <notes>
+      We don't do work that has to last 50, 100, 200 years in the future.
+
+      Constraints change, code changes.
+    </notes>
+  </div>
+  <div>
+    <h1>
+      we are farmers
+    </h1>
+    <notes>
+      We work on living things that change and adapt and we need to program uncertainty into those things.
+
+      Cultivating is a mess and shit is the best fertilizer.
+    </notes>
+  </div>
+  <div>
+    <quote>"Clean code is dead code, there's shit where money is made."
+      <br />
+      - Michael Chan</quote>
+  </div>
+  <div>thanks</div>
+  <div>
+    <h1 id="references">references</h1>
+    <ul>
+      <li><a href="https://refactoring.guru/smells/speculative-generality">Speculative Generality</a></li>
+      <li><a href="https://www.youtube.com/watch?v=-NP_upexPFg">Youtube: Hot Garbage Architecture</a></li>
+    </ul>
+  </div>
+</body>
+
+</html>

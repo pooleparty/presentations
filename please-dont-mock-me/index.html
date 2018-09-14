@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+  <title>big</title>
+  <link href='big.css' rel='stylesheet' type='text/css' />
+  <link href='highlight.css' rel='stylesheet' type='text/css' />
+  <style>
+    .new-shiny {
+      background: #aaaaaa;
+    }
+
+    .full-width {
+      width: 100%;
+    }
+
+    .center {
+      text-align: center;
+    }
+  </style>
+  <script src='big.js'></script>
+  <script src='highlight.js'></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+<body class='dark'>
+  <div>
+    <h1>Please don't mock me</h1>
+    <notes>
+      This talk is about some of the do's and don'ts of mocking in tests.
+
+      It was originally given by Justin Searls at JSConf US 2018.
+    </notes>
+  </div>
+  <div>
+    <ul>
+      <li>😭 obvious abuses</li>
+      <li>😢 less obvious abuses</li>
+      <li>😕 rational but dubious uses</li>
+      <li>👌 only real good use</li>
+    </ul>
+    <notes>
+      There are four sections to this talk:
+      - obvious abuses of mocking
+      - less obvious abuses of mocking
+      - rational but dubios uses of mocking
+      - the only real good use of mocking
+    </notes>
+  </div>
+  <div>
+    😭 using partial mocks
+    <notes>
+      The first obvious abuse of mocking is partial mocks.
+    </notes>
+  </div>
+  <div>
+    <table cellpadding="20">
+      <tr>
+        <td>real</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>fake</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>both</td>
+        <td>❌</td>
+      </tr>
+    </table>
+    <notes>
+      real - if all dependencies are real and you're calling a subject in a test then we are invoking it
+      like we always do
+      fake - still pretty straightforward because mocking libraries are pretty sophisticated and we have full control
+      of dependencies
+      both - hard to tell what is being tested and thus the value of the test.
+    </notes>
+  </div>
+  <div>
+    😭 faking parts of the thing being tested
+    <notes>
+      People mock parts of the subject being tested and argue that "oh this module is so huge that I have to fake out
+      parts of it to test other parts".
+
+      Mocking parts of a huge module that you are testing means that there are two problems:
+      You have a module that no one understands and tests that no one trusts
+
+      The solution here is to fix the giant module and split it into smaller separate modules that can be more easily
+      tested.
+    </notes>
+  </div>
+  <div>
+    😭 replacing some, but not all, dependencies
+    <notes>
+      There is no threshold or limit on the number of things we can mock.
+      There is no imaginary "mockometer" that will set off alarms if you mock too much.
+    </notes>
+  </div>
+  <div>
+    design tests to fail
+    <notes>
+      If a test never fails, it has not given you any valuable feedback. Design how things should fail.
+
+      Wired unit test: If nothing is mocked, tests should fail when dependencies' behavior changes.
+      Therefore, we should limit redundant coverage to reduce the cost of change. If 20 things require a module and
+      that module changes, we have to update 20 tests.
+
+      Isolated unit test: If everything is mocked, tests should fail when dependencies' API changes.
+      Therefore, we should create integration tests that ensure that everything is plugged in correctly.
+
+      Half and half unit test: If some dependencies are mocked and some are not, tests could fail if anything changes.
+      Therefore, we should not write tests like this.
+
+      Don't critique how much people are mocking, critique HOW they are mocking.
+    </notes>
+  </div>
+  <div>
+    people value realness over experimental control
+    <notes>
+      The common thread between these three examples is the idea that people value realness over experimental control.
+
+      Instead of treating realness as a virtue to be maximized, we should clarify what our test is trying to prove and
+      then use all of our tools -- mocks included -- to ensure we have sufficient experimental control.
+    </notes>
+  </div>
+  <div>
+    😢 mocking 3rd-party dependencies
+    <notes>
+      Let's move on to less obvious abuses of mocking.
+
+      Trying to mock 3rd-party modules that are difficult to use.
+    </notes>
+  </div>
+  <div>
+    hard to mock code is hard to use code
+    <notes>
+      if something is hard to test, it may be an indication of poor design
+    </notes>
+  </div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>hard to mock</th>
+        <th>remedy</th>
+      </tr>
+      <tr>
+        <td>thing we own</td>
+        <td>
+          change it
+        </td>
+      </tr>
+      <tr>
+        <td>3rd-party thing</td>
+        <td>useless pain</td>
+      </tr>
+    </table>
+    <notes>
+      If you own the things that is hard to mock, change it. The test is providing valuable feedback that the module is
+      difficult to use.
+
+      If a 3rd party module is difficult to mock, there is not much you can do to remedy the situation. Trying mock
+      these difficult 3rd-party modules cause useless pain.
+    </notes>
+  </div>
+  <div>
+    <div>
+      don't mock it
+    </div>
+    <hr>
+    <div>wrap it</div>
+    <notes>
+      Wrap 3rd party modules in custom modules that we do own.
+
+      Don't have to unit test these custom wrapper modules, we can trust the 3rd-party modules to
+      work.
+    </notes>
+  </div>
+  <div>
+    😢 tangling logic and delegation
+    <notes>
+      Tangling logic and delegation to dependencies.
+    </notes>
+  </div>
+  <div>
+    we assume that tests make change safe
+    <notes>
+      We naively assume that tests make change safe, but we need to think more about what kind of tests make what kind
+      of change what kind of safe.
+
+      If you are writing a test that has no dependencies, then the test specifies logic. Thus, if the logic changes,
+      the test needs to change.
+
+      If a test contains mocked out dependencies, the test specifies relationships. Thus, when the contracts change,
+      the test needs to change.
+
+      But what is a test contains both logic and mocked dependencies? The recommendation is to spin off the logic
+      portion of the module you are testing into its own module and have the test subject's only concern be delegation.
+    </notes>
+  </div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>test specifies</th>
+        <th>makes us feel</th>
+      </tr>
+      <tr>
+        <td>logic</td>
+        <td class="center">👌</td>
+      </tr>
+      <tr>
+        <td>relationships</td>
+        <td class="center">👍</td>
+      </tr>
+      <tr>
+        <td>both</td>
+        <td class="center">😨</td>
+      </tr>
+    </table>
+    <notes>
+      If a test specifies logic, it makes us feel great because it is easy to test by just passing in values.
+
+      If a test specifies relationships, it makes us feel good that there is some sort of evidence the design of the
+      system is being validated.
+
+      If a test specifies both, it will be hard to maintain and makes us feel unsafe.
+    </notes>
+  </div>
+  <div>
+    functions should do or delegate, never both
+  </div>
+  <div>
+    😢 mocking intermediate data providers
+
+    <notes>
+      In a system with many layers of dependencies, it's sometimes difficult to determine which layer to test.
+
+      The answer is: it depends.
+
+      If you are writing isolated unit tests, you should mock out the direct dependencies of the test subject and only
+      use the minimal amount test data to test the behavior of the subject.
+
+      If you are shooting for regression safety, you want to keep everything realistic or stay as far to the edges of
+      the system as possible.
+
+      Don't mock at arbitrary depth. This will cause tests to fail for reasons not associated to the subject and test
+      data is not related to the subject.
+    </notes>
+  </div>
+  <div>
+    <table>
+      <tr>
+        <th>mocked layer</th>
+        <th>meaningful failure?</th>
+      </tr>
+      <tr>
+        <td>direct dependency</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>external system</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td>intermediate layer</td>
+        <td>❌</td>
+      </tr>
+    </table>
+    <notes>
+      If we mock direct dependencies and the test fails, thats a good thing because it means the contracts of our
+      dependencies has changed.
+
+      If the mocked layer is at the external system level, its another good failure that can start a conversation about
+      how an API's contract has changed from underneath us.
+
+      If we mock at some intermediate depth, its another form of useless pain that gives us no valuable feedback
+    </notes>
+  </div>
+  <div>
+    improper use of mocks undercut the ROI of your tests
+
+    <notes>
+      The common thread between these last three examples is: improper use of mocks undercut the ROI of your tests.
+
+      We can't defend the value of our tests if they fail for reasons that don't mean anything and must change in ways
+      we can't anticipate.
+    </notes>
+  </div>
+  <div>
+    😕 testing with mock data instead of real data
+    <notes>
+      Rational but dubious uses of mocks.
+
+      We should mock dependencies, but pass real values to our test subjects. Real values contain useful type
+      information and should be cheap and easy to create with no side effects. If they aren't, make them better.
+    </notes>
+  </div>
+  <div>
+    😕 using mocks to shut up side effects
+    <notes>
+      Good module design is free of side effects and idempotent. If you are using mocks to silence side effects of
+      requiring modules in tests, fix your modules and remove the side effects.
+    </notes>
+  </div>
+  <div>
+    😕 neglecting tests' design feedback
+    <notes>
+      If a test inflicts pain, people tend to blame the test -- even when the root cause is in the code's design.
+      Hard to test code is hard to use code.
+    </notes>
+  </div>
+  <div>
+    👌 discovery testing
+    <notes>
+      Others call this test driving design or outside-in test driven design.
+
+      Use tests to write the code we wish we had.
+
+      This enables and lowers the bar for:
+      - Reliable incremental progress
+      - single-responsibility units
+      - intention-revealing names
+      - discoverable organization
+      - separate values and logic
+      - mostly sync pure functions
+    </notes>
+  </div>
+  <div>thanks</div>
+  <div>
+    <h1>references</h1>
+    <ul>
+      <li><a href="https://www.youtube.com/watch?v=Af4M8GMoxi4">Youtube: Please don't mock me</a></li>
+    </ul>
+  </div>
+</body>
+
+</html>
