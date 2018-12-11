@@ -13,44 +13,56 @@ theme: night
 
 Notes:
 - Define a schema to model your data, and resolvers used to fetch your data
-- Single endpoint to post queries and mutation to
+- Single endpoint to post queries and mutations to
 - Client can specify what data to return
 - Generated documentation
 - Awesome toolings
 
 ---
 
-## GraphQL server with graphql-yoga
+`git clone https://github.com/pooleparty/presentations.git`
+
+---
+
+## Goals
+
+- Create GraphQL server with graphql-yoga
+- Use Apollo React components to fetch and mutate data
 
 Notes:
 - graphql-yoga is by Prisma
 - Super easy way to spin up a graphql server
 - It's a combination of Express.js and other graphql libraries
+- Apollo is a GraphQL Saas company
+- they provide several open source GraphQL libraries
 
 ---
 
-## Simple schema
+## 1. Simple Schema
 
-```graphql
-type Query {
-  books: [Book!]
-  book(title: String!): Book
-}
-
-type Book {
-  title: String!
-  author: String!
-  link: String
-  year: Int
-}
-```
+`git checkout react-graphql-01-simple-schema`
 
 ---
 
-## GraphQL client with apollo
+## 2. Apollo Client Integration
+
+`git checkout react-graphql-02-frontend-client`
+
+---
+
+## 3. Apollo Components
+
+`git checkout react-graphql-03-using-apollo-components`
+
+---
+
+## 4. Creating Books
+
+`git checkout react-graphql-04-creating-books`
 
 ---
 
 ## Resources
 - https://graphql.org/
 - https://www.graphql.com/
+- https://advancedreact.com/
