@@ -1,29 +1,28 @@
 import React, { Component } from 'react';
 import { ApolloProvider } from 'react-apollo';
 import client from './apolloClient';
-import AllBooks from './AllBooks';
-// import gql from 'graphql-tag';
+import gql from 'graphql-tag';
 
-// client
-//   .query({
-//     query: gql`
-//       {
-//         books {
-//           title
-//           author
-//         }
-//       }
-//     `,
-//   })
-//   .then(result => console.log(result));
+const query = gql`
+  query GET_ALL_BOOKS {
+    books {
+      title
+      author
+    }
+  }
+`;
 
 class App extends Component {
+  componentDidMount = async () => {
+    const result = await client.query({
+      query,
+    });
+
+    console.log(result);
+  };
+
   render() {
-    return (
-      <ApolloProvider client={client}>
-        <AllBooks />
-      </ApolloProvider>
-    );
+    return <h1>React + GraphQL</h1>;
   }
 }
 
