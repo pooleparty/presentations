@@ -1,27 +1,34 @@
 import React, { Component } from 'react';
+import { ApolloProvider } from 'react-apollo';
 import client from './apolloClient';
-import gql from 'graphql-tag';
-
-const ALL_BOOKS_QUERY = gql`
-  query ALL_BOOKS_QUERY {
-    books {
-      title
-      author
-    }
-  }
-`;
+import Books from './Books';
+import Book from './Book';
+import './App.css';
 
 class App extends Component {
-  componentDidMount = async () => {
-    const result = await client.query({
-      query: ALL_BOOKS_QUERY,
-    });
+  state = {
+    selectedBookTitle: undefined,
+  };
 
-    console.log(result);
+  onSelectBook = title => {
+    this.setState({ selectedBookTitle: title });
   };
 
   render() {
-    return <h1>React + GraphQL</h1>;
+    return (
+      <ApolloProvider client={client}>
+        <div className="app">
+          <h1>React + GraphQL</h1>
+          <hr />
+          <div className="book-container">
+            <Books selectBook={this.onSelectBook} />
+            {this.state.selectedBookTitle && (
+              <Book title={this.state.selectedBookTitle} />
+            )}
+          </div>
+        </div>
+      </ApolloProvider>
+    );
   }
 }
 
