@@ -30,9 +30,9 @@ export default function Book(props) {
               {book.title} <small>by: {book.author}</small>
             </h1>
             <div>
-              <strong>published:</strong> {book.year}
+              <strong>published:</strong> {book.year || 'N/A'}
             </div>
-            <a href={book.link}>View More</a>
+            {book.link && <a href={book.link}>View More</a>}
           </div>
         );
       }}
