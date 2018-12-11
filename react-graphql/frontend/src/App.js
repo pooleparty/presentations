@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import client from './apolloClient';
 import gql from 'graphql-tag';
 
-const query = gql`
-  query GET_ALL_BOOKS {
+const ALL_BOOKS_QUERY = gql`
+  query ALL_BOOKS_QUERY {
     books {
       title
       author
@@ -14,7 +14,7 @@ const query = gql`
 class App extends Component {
   componentDidMount = async () => {
     const result = await client.query({
-      query,
+      query: ALL_BOOKS_QUERY,
     });
 
     console.log(result);
