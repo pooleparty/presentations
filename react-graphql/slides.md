@@ -21,6 +21,10 @@ Notes:
 
 ---
 
+`git clone https://github.com/pooleparty/presentations.git`
+
+---
+
 ## Goals
 - Create GraphQL server with graphql-yoga
 - Use Apollo React components to fetch and mutate data
