@@ -21,7 +21,7 @@ Notes:
 
 ---
 
-# Goals
+## Goals
 - Create GraphQL server with graphql-yoga
 - Use Apollo React components to fetch and mutate data
 
@@ -43,19 +43,19 @@ Notes:
 
 ## 02 Frontend Apollo Client
 
-`git checkout react-graphql-01-frontend-client`
+`git checkout react-graphql-02-frontend-client`
 
 ---
 
 ## 03 Using Apollo Components
 
-`git checkout react-graphql-01-using-apollo-components`
+`git checkout react-graphql-03-using-apollo-components`
 
 ---
 
 ## 04 Creating Books
 
-`git checkout react-graphql-01-creating-books`
+`git checkout react-graphql-04-creating-books`
 
 ---
 
