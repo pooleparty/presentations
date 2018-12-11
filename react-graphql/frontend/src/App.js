@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { ApolloProvider } from 'react-apollo';
 import client from './apolloClient';
 import gql from 'graphql-tag';
 
