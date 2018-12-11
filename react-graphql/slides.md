@@ -1,5 +1,5 @@
 ---
-title: React + GraphQL
+title: React + GraphQL = <3
 theme: night
 ---
 
@@ -21,7 +21,11 @@ Notes:
 
 ---
 
-`git clone https://github.com/pooleparty/presentations.git`
+```bash
+git clone https://github.com/pooleparty/presentations.git
+
+cd react-graphql
+```
 
 ---
 
@@ -36,30 +40,6 @@ Notes:
 - It's a combination of Express.js and other graphql libraries
 - Apollo is a GraphQL Saas company
 - They create a handful of open source GraphQL libraries
-
----
-
-## 01 Simple schema
-
-`git checkout react-graphql-01-simple-schema`
-
----
-
-## 02 Frontend Apollo Client
-
-`git checkout react-graphql-02-frontend-client`
-
----
-
-## 03 Using Apollo Components
-
-`git checkout react-graphql-03-using-apollo-components`
-
----
-
-## 04 Creating Books
-
-`git checkout react-graphql-04-creating-books`
 
 ---
 
