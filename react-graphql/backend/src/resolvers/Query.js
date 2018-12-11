@@ -1,11 +1,9 @@
-const books = require('../../data/books.json');
-
 const Query = {
   books(parent, args, context, info) {
-    return books;
+    return context.db.books;
   },
   book(parent, args, context, info) {
-    return books.find(
+    return context.db.books.find(
       book => book.title.toLowerCase() === args.title.toLowerCase()
     );
   },

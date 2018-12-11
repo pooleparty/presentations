@@ -4,7 +4,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import './Book.css';
 
-const SINGLE_BOOK_QUERY = gql`
+export const SINGLE_BOOK_QUERY = gql`
   query SINGLE_BOOK_QUERY($title: String!) {
     book(title: $title) {
       title
@@ -25,7 +25,7 @@ export default function Book(props) {
         const { book } = data;
 
         return (
-          <div class="book">
+          <div className="book">
             <h1>
               {book.title} <small>by: {book.author}</small>
             </h1>

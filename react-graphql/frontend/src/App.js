@@ -3,6 +3,7 @@ import { ApolloProvider } from 'react-apollo';
 import client from './apolloClient';
 import Books from './Books';
 import Book from './Book';
+import CreateBook from './CreateBook';
 import './App.css';
 
 class App extends Component {
@@ -20,6 +21,7 @@ class App extends Component {
         <div className="app">
           <h1>React + GraphQL</h1>
           <hr />
+          <CreateBook />
           <div className="book-container">
             <Books selectBook={this.onSelectBook} />
             {this.state.selectedBookTitle && (
