@@ -21,35 +21,41 @@ Notes:
 
 ---
 
-## GraphQL server with graphql-yoga
+# Goals
+- Create GraphQL server with graphql-yoga
+- Use Apollo React components to fetch and mutate data
 
 Notes:
 
 - graphql-yoga is by Prisma
 - Super easy way to spin up a graphql server
 - It's a combination of Express.js and other graphql libraries
+- Apollo is a GraphQL Saas company
+- They create a handful of open source GraphQL libraries
 
 ---
 
-## Simple schema
+## 01 Simple schema
 
-```graphql
-type Query {
-  books: [Book!]
-  book(title: String!): Book
-}
-
-type Book {
-  title: String!
-  author: String!
-  link: String
-  year: Int
-}
-```
+`git checkout react-graphql-01-simple-schema`
 
 ---
 
-## GraphQL client with apollo
+## 02 Frontend Apollo Client
+
+`git checkout react-graphql-01-frontend-client`
+
+---
+
+## 03 Using Apollo Components
+
+`git checkout react-graphql-01-using-apollo-components`
+
+---
+
+## 04 Creating Books
+
+`git checkout react-graphql-01-creating-books`
 
 ---
 
@@ -57,3 +63,4 @@ type Book {
 
 - https://graphql.org/
 - https://www.graphql.com/
+- https://advancedreact.com/
