@@ -1,0 +1,8 @@
+.app {
+  padding: 1rem;
+}
+
+.book-container {
+  display: flex;
+  flex-direction: row;
+}
