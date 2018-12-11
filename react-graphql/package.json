@@ -1,0 +1,15 @@
+{
+  "name": "react-graphql",
+  "version": "1.0.0",
+  "description": "- quick primer on what graphql is and why we might want to use it ## Scaffold backend with graphql-yoga - Setup simple schema - Book  - id  - title - start with one hardcoded Book  -write simple Query resolver   - get all books   - get book by id - manually run graphql query ## Scaffold front end with apollo-client - Use Query HOC to query for all books  - create link to view specific book - We are going to want to create new Books  - Create `createBook` Mutation   - schema   - resolver ## Other Topics - Caching  - manual cache manipulation",
+  "main": "index.js",
+  "scripts": {
+    "start": "reveal-md slides.md -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "reveal-md": "^2.4.0"
+  }
+}
