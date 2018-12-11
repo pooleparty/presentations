@@ -21,11 +21,10 @@ export default function Books(props) {
         if (loading) return <p>Loading...</p>;
         if (error) return <p>Error :(</p>;
 
-        // return <pre>{JSON.stringify(data, null, 2)}</pre>;
-        // NOTICE: the property to access on data depends on the query
         return (
           <div className="books">
-            {data.books.map(book => (
+            {// NOTICE: the property to access on data depends on the query
+            data.books.map(book => (
               <div key={book.title + book.author}>
                 <h1>
                   {book.title} <small>by: {book.author}</small>
