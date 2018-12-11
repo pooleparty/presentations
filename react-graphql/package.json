@@ -1,0 +1,12 @@
+{
+  "name": "react-graphql",
+  "version": "1.0.0",
+  "description": "Presentation on React + GraphQL using graphql-yoga and react-apollo",
+  "scripts": {
+    "start": "reveal-md slides.md -w"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "reveal-md": "^2.4.0"
+  }
+}
