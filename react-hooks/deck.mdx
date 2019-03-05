@@ -79,9 +79,9 @@ export const InsertReactImage = styled.img`
     features from function components.
   </p>
   <p>
-    Hooks don’t work inside classes — they let you use React without classes.
-    (We don’t recommend rewriting your existing components overnight but you can
-    start using Hooks in the new ones if you’d like.)
+    Hooks don’t work inside classes — they let you use React lifecycle features
+    without classes. (We don’t recommend rewriting your existing components
+    overnight but you can start using Hooks in the new ones if you’d like.)
   </p>
   <p>
     React provides a few built-in Hooks and you can also create your own Hooks
@@ -112,20 +112,30 @@ export const InsertReactImage = styled.img`
 ### It’s hard to reuse stateful logic between components
 
 <Notes>
-  React doesn’t offer a way to “attach” reusable behavior to a component (for
-  example, connecting it to a store). If you’ve worked with React for a while,
-  you may be familiar with patterns like render props and higher-order
-  components that try to solve this. But these patterns require you to
-  restructure your components when you use them, which can be cumbersome and
-  make code harder to follow. If you look at a typical React application in
-  React DevTools, you will likely find a “wrapper hell” of components surrounded
-  by layers of providers, consumers, higher-order components, render props, and
-  other abstractions. While we could filter them out in DevTools, this points to
-  a deeper underlying problem: React needs a better primitive for sharing
-  stateful logic. With Hooks, you can extract stateful logic from a component so
-  it can be tested independently and reused. Hooks allow you to reuse stateful
-  logic without changing your component hierarchy. This makes it easy to share
-  Hooks among many components or with the community.
+  <p>
+    React doesn’t offer a way to “attach” reusable behavior to a component (for
+    example, connecting it to a store).
+  </p>
+  <p>
+    If you’ve worked with React for a while, you may be familiar with patterns
+    like render props and higher-order components that try to solve this. But
+    these patterns require you to restructure your components when you use them,
+    which can be cumbersome and make code harder to follow.
+  </p>
+  <p>
+    If you look at a typical React application in React DevTools, you will
+    likely find a “wrapper hell” of components surrounded by layers of
+    providers, consumers, higher-order components, render props, and other
+    abstractions. While we could filter them out in DevTools, this points to a
+    deeper underlying problem: React needs a better primitive for sharing
+    stateful logic.
+  </p>
+  <p>
+    With Hooks, you can extract stateful logic from a component so it can be
+    tested independently and reused. Hooks allow you to reuse stateful logic
+    without changing your component hierarchy. This makes it easy to share Hooks
+    among many components or with the community.
+  </p>
 </Notes>
 
 ---
@@ -133,54 +143,76 @@ export const InsertReactImage = styled.img`
 ### Complex components become hard to understand
 
 <Notes>
-  We’ve often had to maintain components that started out simple but grew into
-  an unmanageable mess of stateful logic and side effects. Each lifecycle method
-  often contains a mix of unrelated logic. For example, components might perform
-  some data fetching in componentDidMount and componentDidUpdate. However, the
-  same componentDidMount method might also contain some unrelated logic that
-  sets up event listeners, with cleanup performed in componentWillUnmount.
-  Mutually related code that changes together gets split apart, but completely
-  unrelated code ends up combined in a single method. This makes it too easy to
-  introduce bugs and inconsistencies. In many cases it’s not possible to break
-  these components into smaller ones because the stateful logic is all over the
-  place. It’s also difficult to test them. This is one of the reasons many
-  people prefer to combine React with a separate state management library.
-  However, that often introduces too much abstraction, requires you to jump
-  between different files, and makes reusing components more difficult. To solve
-  this, Hooks let you split one component into smaller functions based on what
-  pieces are related (such as setting up a subscription or fetching data),
-  rather than forcing a split based on lifecycle methods. You may also opt into
-  managing the component’s local state with a reducer to make it more
-  predictable.
+  <p>
+    We’ve often had to maintain components that started out simple but grew into
+    an unmanageable mess of stateful logic and side effects. Each lifecycle
+    method often contains a mix of unrelated logic.
+  </p>
+  <p>
+    For example, components might perform some data fetching in
+    componentDidMount and componentDidUpdate. However, the same
+    componentDidMount method might also contain some unrelated logic that sets
+    up event listeners, with cleanup performed in componentWillUnmount.
+  </p>
+  <p>
+    Mutually related code that changes together gets split apart, but completely
+    unrelated code ends up combined in a single method. This makes it too easy
+    to introduce bugs and inconsistencies. In many cases it’s not possible to
+    break these components into smaller ones because the stateful logic is all
+    over the place. It’s also difficult to test them.
+  </p>
+  <p>
+    To solve this, Hooks let you split one component into smaller functions
+    based on what pieces are related (such as setting up a subscription or
+    fetching data), rather than forcing a split based on lifecycle methods.
+  </p>
 </Notes>
 
 ---
 
 ### Classes confuse both people and machines
 
-<Notes>
-  In addition to making code reuse and code organization more difficult, we’ve
-  found that classes can be a large barrier to learning React. You have to
-  understand how this works in JavaScript, which is very different from how it
-  works in most languages. You have to remember to bind the event handlers.
-  Without unstable syntax proposals, the code is very verbose. Classes present
-  issues for today’s tools, too. For example, classes don’t minify very well,
-  and they make hot reloading flaky and unreliable. The React team wants to
-  present an API that makes it more likely for code to stay on the optimizable
-  path. To solve these problems, Hooks let you use more of React’s features
-  without classes. Conceptually, React components have always been closer to
-  functions. Hooks embrace functions, but without sacrificing the practical
-  spirit of React. Hooks provide access to imperative escape hatches and don’t
-  require you to learn complex functional or reactive programming techniques.
-</Notes>
+<Appear>
+  <strong>There are no plans to remove classes from React</strong>
+</Appear>
 
-**There are no plans to remove classes from React**
+<Notes>
+  <p>
+    In addition to making code reuse and code organization more difficult, we’ve
+    found that classes can be a large barrier to learning React.
+  </p>
+  <p>
+    You have to understand how this works in JavaScript, which is very different
+    from how it works in most languages. You have to remember to bind the event
+    handlers. Without unstable syntax proposals, the code is very verbose.
+  </p>
+  <p>
+    Classes present issues for today’s tools, too. For example, classes don’t
+    minify very well, and they make hot reloading flaky and unreliable.
+  </p>
+  <p>
+    The React team wants to present an API that makes it more likely for code to
+    stay on the optimizable path. To solve these problems, Hooks let you use
+    more of React’s features without classes. Conceptually, React components
+    have always been closer to functions. Hooks embrace functions, but without
+    sacrificing the practical spirit of React. Hooks provide access to
+    imperative escape hatches and don’t require you to learn complex functional
+    or reactive programming techniques.
+  </p>
+</Notes>
 
 ---
 
 <CodeSurfer
   title={() => <Heading3>Increment count class example</Heading3>}
   code={require('!raw-loader!./src/IncrementCountClassExample')}
+  steps={[
+    {},
+    { lines: [7, 8, 9] },
+    { lines: [11] },
+    { lines: [14, 15, 16] },
+    { lines: [21, 22] },
+  ]}
 />
 
 <Notes>
@@ -193,6 +225,9 @@ export const InsertReactImage = styled.img`
 <CodeSurfer
   title={() => <Heading3>Increment count useState example</Heading3>}
   code={require('!raw-loader!./src/UseStateExample')}
+  steps={[{}, 
+    {tokens:{1: [5]}},  
+  { lines: [4] }, { lines: [8, 9] }]}
 />
 
 <Notes>
@@ -218,25 +253,6 @@ export const InsertReactImage = styled.img`
     our variable. (If we wanted to store two different values in state, we would
     call useState() twice.)
   </p>
-  <strong>What does useState return?</strong>
-  <p>
-    It returns a pair of values: the current state and a function that updates
-    it. This is why we write <code>const [count, setCount] = useState()</code>.
-    This is similar to <code>this.state.count</code> and{' '}
-    <code>this.setState</code> in a class, except you get them in a pair. If we
-    want to update the current `count`, we can call `setCount`.
-  </p>
-</Notes>
-
----
-
-<CodeSurfer
-  title={() => <Heading3>Using multiple state variables</Heading3>}
-  code={require('!raw-loader!./src/MultipleStateVariablesExample')}
-/>
-
-<Notes>
-  <p>You don’t have to use many state variables.</p>
   <p>
     State variables can hold objects and arrays just fine, so you can still
     group related data together.
@@ -245,6 +261,33 @@ export const InsertReactImage = styled.img`
     However, unlike <code>this.setState</code> in a class, updating a state
     variable always replaces it instead of merging it.
   </p>
+  <strong>What does useState return?</strong>
+  <p>
+    It returns a pair of values: the current state and a function that updates
+    it. This is why we write <code>const [count, setCount] = useState()</code>.
+    This is similar to <code>this.state.count</code> and{' '}
+    <code>this.setState</code> in a class, except you get them in a pair. If we
+    want to update the current `count`, we can call `setCount`.
+  </p>
+  <p>We will look more indepth at the useState hook later on.</p>
+</Notes>
+
+---
+
+<CodeSurfer
+  title={() => <Heading3>Side Effect Class Example</Heading3>}
+  code={require('!raw-loader!./src/SideEffectClassExample')}
+  steps={[
+    {},
+    {range:[9,15]}
+  ]}
+/>
+
+<Notes>
+  <p>In React class components, the render method itself shouldn’t cause side effects. It would be too early — we typically want to perform our effects after React has updated the DOM.</p>
+<p>This is why in React classes, we put side effects into componentDidMount and componentDidUpdate. Coming back to our example, here is a React counter class component that updates the document title right after React makes changes to the DOM</p>
+<strong>Note how we have to duplicate the code between these two lifecycle methods in class.</strong>
+<p>This is because in many cases we want to perform the same side effect regardless of whether the component just mounted, or if it has been updated. Conceptually, we want it to happen after every render — but React class components don’t have a method like this. We could extract a separate method but we would still have to call it in two places.</p>
 </Notes>
 
 ---
@@ -252,7 +295,26 @@ export const InsertReactImage = styled.img`
 <CodeSurfer
   title={() => <Heading3>useEffect Example</Heading3>}
   code={require('!raw-loader!./src/UseEffectExample')}
+  steps={[
+    {},
+    {tokens:{1: [7]}},
+    {range:[6,8]},
+    {range:[12,15]},
+  ]}
 />
+
+<Notes>
+  <p>The Effect Hook lets you perform side effects in function components</p>
+  <p>
+    Data fetching, setting up a subscription, and manually changing the DOM in
+    React components are all examples of side effects.
+  </p>
+  <p>
+    You can think of useEffect Hook as componentDidMount, componentDidUpdate,
+    and componentWillUnmount combined.
+  </p>
+  <p>We will take a more indepth look at the useEffect hook later on.</p>
+</Notes>
 
 ---
 
@@ -261,6 +323,10 @@ export const InsertReactImage = styled.img`
 ---
 
 ### Only call Hooks at the top level
+
+<Appear>
+  <Anchor href="https://reactjs.org/docs/hooks-rules.html#explanation" target="blank">Explanation</Anchor>
+</Appear>
 
 <Notes>
   <p>
@@ -275,6 +341,9 @@ export const InsertReactImage = styled.img`
     By following this rule, you ensure that Hooks are called in the same order
     each time a component renders. That’s what allows React to correctly
     preserve the state of Hooks between multiple useState and useEffect calls.
+  </p>
+  <p>
+    There is a nice explanation of how this works and why it is important in the React Hooks documentation.
   </p>
 </Notes>
 
@@ -308,21 +377,19 @@ export const InsertReactImage = styled.img`
 ## Building Your Own Hooks
 
 <Notes>
-  Building your own Hooks lets you extract component logic into reusable
-  functions
+  <p>Building your own Hooks lets you extract component logic into reusable functions</p>
 </Notes>
 
 ---
 
 <CodeSurfer
   code={require('!raw-loader!./src/FriendStatus')}
-  steps={[{}, { range: [4, 15] }]}
+  steps={[{}, { range: [2, 13] }]}
 />
 
 <Notes>
-Here we have a component from a chat application that displays a message indicitaing whether a friend is online or offline.
-
-(highlight code) We can see the use of both the useState hook and useEffect hooks to keep track of whether the friend is online and subscribe to updates from the chat API respectively.
+<p>Here we have a function component from a chat application that displays a message indicitaing whether a friend is online or offline.</p>
+<p>(highlight code) We can see the use of both the useState hook and useEffect hooks to keep track of whether the friend is online and subscribe to updates from the chat API respectively.</p>
 
 </Notes>
 
@@ -330,7 +397,7 @@ Here we have a component from a chat application that displays a message indicit
 
 <CodeSurfer
   code={require('!raw-loader!./src/FriendListItem')}
-  steps={[{}, { range: [4, 15] }]}
+  steps={[{}, { range: [2, 13] }]}
 />
 
 <Notes>
@@ -587,8 +654,9 @@ Accepts a function that contains imperative, possibly effectful code.
   </p>
   <p>
     Additionally, if a component renders multiple times (as they typically do),
-    the previous effect is cleaned up before executing the next effect. In our
-    example, this means a new subscription is created on every update.
+    the previous effect is cleaned up before executing the next effect.</p>
+  <p>
+    In our example, this means a new subscription is created on every update.
   </p>
 </Notes>
 

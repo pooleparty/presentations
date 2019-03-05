@@ -1,15 +1,15 @@
-import React from 'react'
-
-export default class IncrementCountClassExample extends React.Component {
+class IncrementCountClassExample extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
-      count: 0
+      count: 0,
     };
+
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick = () => {
+  handleClick() {
     this.setState({ count: this.state.count + 1 });
   }
 
@@ -17,9 +17,7 @@ export default class IncrementCountClassExample extends React.Component {
     return (
       <div>
         <p>You clicked {this.state.count} times</p>
-        <button onClick={this.handleClick}>
-          Click me
-        </button>
+        <button onClick={this.handleClick}>Click me</button>
       </div>
     );
   }
