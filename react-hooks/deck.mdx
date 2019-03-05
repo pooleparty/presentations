@@ -4,7 +4,11 @@ import { Split, Horizontal } from 'mdx-deck/layouts';
 import { future } from 'mdx-deck/themes';
 import styled from 'styled-components';
 import codeSurferTheme from 'prism-react-renderer/themes/vsDarkPlus';
-import { BackgroundImage, CodeSurferCustom, CodeSurferSplit } from './src/presentation-components';
+import {
+  BackgroundImage,
+  CodeSurferCustom,
+  CodeSurferSplit,
+} from './src/presentation-components';
 
 export const { h3: Heading3, h2: Heading2, a: Anchor } = mdxDeckComponents;
 export { components } from 'mdx-deck-code-surfer';
@@ -20,6 +24,7 @@ export const theme = {
 
 <Head>
   <title>React Hooks</title>
+  <link rel="shortcut icon" type="image/ico" href="/favicon.ico" />
 </Head>
 
 <BackgroundImage src="images/hook.png" />
@@ -69,24 +74,33 @@ export const InsertReactImage = styled.img`
 </dl>
 
 <Notes>
-<p>Hooks are functions that let you “hook into” React state and
-lifecycle features from function components.</p>
-<p>Hooks don’t work inside
-classes — they let you use React without classes. (We don’t
-recommend rewriting your existing components overnight but you can
-start using Hooks in the new ones if you’d like.)</p> 
-<p>React provides a
-few built-in Hooks and you can also create your own Hooks
-to reuse stateful behavior between different components.</p>
-<p>Starting with 16.8.0, React includes a stable implementation of React Hooks for:</p>
-<ul>
-<li>React DOM</li>
-<li>React DOM Server</li>
-<li>React Test Renderer</li>
-<li>React Shallow Renderer</li>
-</ul>
-<em>Note that to enable Hooks, all React packages need to be 16.8.0 or higher. Hooks won’t work if you forget to update, for example, React DOM.
-</em>
+  <p>
+    Hooks are functions that let you “hook into” React state and lifecycle
+    features from function components.
+  </p>
+  <p>
+    Hooks don’t work inside classes — they let you use React without classes.
+    (We don’t recommend rewriting your existing components overnight but you can
+    start using Hooks in the new ones if you’d like.)
+  </p>
+  <p>
+    React provides a few built-in Hooks and you can also create your own Hooks
+    to reuse stateful behavior between different components.
+  </p>
+  <p>
+    Starting with 16.8.0, React includes a stable implementation of React Hooks
+    for:
+  </p>
+  <ul>
+    <li>React DOM</li>
+    <li>React DOM Server</li>
+    <li>React Test Renderer</li>
+    <li>React Shallow Renderer</li>
+  </ul>
+  <em>
+    Note that to enable Hooks, all React packages need to be 16.8.0 or higher.
+    Hooks won’t work if you forget to update, for example, React DOM.
+  </em>
 </Notes>
 
 ---
@@ -97,77 +111,68 @@ to reuse stateful behavior between different components.</p>
 
 ### It’s hard to reuse stateful logic between components
 
-```notes
-React doesn’t offer a way to “attach” reusable behavior to a
-component (for example, connecting it to a store). If you’ve
-worked with React for a while, you may be familiar with patterns
-like render props and higher-order components that try to solve
-this. But these patterns require you to restructure your
-components when you use them, which can be cumbersome and make
-code harder to follow. If you look at a typical React application
-in React DevTools, you will likely find a “wrapper hell” of
-components surrounded by layers of providers, consumers,
-higher-order components, render props, and other abstractions.
-While we could filter them out in DevTools, this points to a
-deeper underlying problem: React needs a better primitive for
-sharing stateful logic. With Hooks, you can extract stateful logic
-from a component so it can be tested independently and reused.
-Hooks allow you to reuse stateful logic without changing your
-component hierarchy. This makes it easy to share Hooks among many
-components or with the community.
-```
+<Notes>
+  React doesn’t offer a way to “attach” reusable behavior to a component (for
+  example, connecting it to a store). If you’ve worked with React for a while,
+  you may be familiar with patterns like render props and higher-order
+  components that try to solve this. But these patterns require you to
+  restructure your components when you use them, which can be cumbersome and
+  make code harder to follow. If you look at a typical React application in
+  React DevTools, you will likely find a “wrapper hell” of components surrounded
+  by layers of providers, consumers, higher-order components, render props, and
+  other abstractions. While we could filter them out in DevTools, this points to
+  a deeper underlying problem: React needs a better primitive for sharing
+  stateful logic. With Hooks, you can extract stateful logic from a component so
+  it can be tested independently and reused. Hooks allow you to reuse stateful
+  logic without changing your component hierarchy. This makes it easy to share
+  Hooks among many components or with the community.
+</Notes>
 
 ---
 
 ### Complex components become hard to understand
 
-```notes
-We’ve often had to maintain components that started out simple but
-grew into an unmanageable mess of stateful logic and side effects.
-Each lifecycle method often contains a mix of unrelated logic. For
-example, components might perform some data fetching in
-componentDidMount and componentDidUpdate. However, the same
-componentDidMount method might also contain some unrelated logic
-that sets up event listeners, with cleanup performed in
-componentWillUnmount. Mutually related code that changes together
-gets split apart, but completely unrelated code ends up combined
-in a single method. This makes it too easy to introduce bugs and
-inconsistencies. In many cases it’s not possible to break these
-components into smaller ones because the stateful logic is all
-over the place. It’s also difficult to test them. This is one of
-the reasons many people prefer to combine React with a separate
-state management library. However, that often introduces too much
-abstraction, requires you to jump between different files, and
-makes reusing components more difficult. To solve this, Hooks let
-you split one component into smaller functions based on what
-pieces are related (such as setting up a subscription or fetching
-data), rather than forcing a split based on lifecycle methods. You
-may also opt into managing the component’s local state with a
-reducer to make it more predictable.
-```
+<Notes>
+  We’ve often had to maintain components that started out simple but grew into
+  an unmanageable mess of stateful logic and side effects. Each lifecycle method
+  often contains a mix of unrelated logic. For example, components might perform
+  some data fetching in componentDidMount and componentDidUpdate. However, the
+  same componentDidMount method might also contain some unrelated logic that
+  sets up event listeners, with cleanup performed in componentWillUnmount.
+  Mutually related code that changes together gets split apart, but completely
+  unrelated code ends up combined in a single method. This makes it too easy to
+  introduce bugs and inconsistencies. In many cases it’s not possible to break
+  these components into smaller ones because the stateful logic is all over the
+  place. It’s also difficult to test them. This is one of the reasons many
+  people prefer to combine React with a separate state management library.
+  However, that often introduces too much abstraction, requires you to jump
+  between different files, and makes reusing components more difficult. To solve
+  this, Hooks let you split one component into smaller functions based on what
+  pieces are related (such as setting up a subscription or fetching data),
+  rather than forcing a split based on lifecycle methods. You may also opt into
+  managing the component’s local state with a reducer to make it more
+  predictable.
+</Notes>
 
 ---
 
 ### Classes confuse both people and machines
 
-```notes
-In addition to making code reuse and code organization more
-difficult, we’ve found that classes can be a large barrier to
-learning React. You have to understand how this works in
-JavaScript, which is very different from how it works in most
-languages. You have to remember to bind the event handlers.
-Without unstable syntax proposals, the code is very verbose.
-Classes present issues for today’s
-tools, too. For example, classes don’t minify very well, and they
-make hot reloading flaky and unreliable. The React team wants to present an API
-that makes it more likely for code to stay on the optimizable
-path. To solve these problems, Hooks let you use more of React’s
-features without classes. Conceptually, React components have
-always been closer to functions. Hooks embrace functions, but
-without sacrificing the practical spirit of React. Hooks provide
-access to imperative escape hatches and don’t require you to learn
-complex functional or reactive programming techniques.
-```
+<Notes>
+  In addition to making code reuse and code organization more difficult, we’ve
+  found that classes can be a large barrier to learning React. You have to
+  understand how this works in JavaScript, which is very different from how it
+  works in most languages. You have to remember to bind the event handlers.
+  Without unstable syntax proposals, the code is very verbose. Classes present
+  issues for today’s tools, too. For example, classes don’t minify very well,
+  and they make hot reloading flaky and unreliable. The React team wants to
+  present an API that makes it more likely for code to stay on the optimizable
+  path. To solve these problems, Hooks let you use more of React’s features
+  without classes. Conceptually, React components have always been closer to
+  functions. Hooks embrace functions, but without sacrificing the practical
+  spirit of React. Hooks provide access to imperative escape hatches and don’t
+  require you to learn complex functional or reactive programming techniques.
+</Notes>
 
 **There are no plans to remove classes from React**
 
@@ -178,9 +183,10 @@ complex functional or reactive programming techniques.
   code={require('!raw-loader!./src/IncrementCountClassExample')}
 />
 
-```notes
-Hooks don’t work inside classes. But you can use them instead of writing classes.
-```
+<Notes>
+  Hooks don’t work inside classes. But you can use them instead of writing
+  classes.
+</Notes>
 
 ---
 
@@ -301,9 +307,10 @@ Hooks don’t work inside classes. But you can use them instead of writing class
 
 ## Building Your Own Hooks
 
-```notes
-Building your own Hooks lets you extract component logic into reusable functions
-```
+<Notes>
+  Building your own Hooks lets you extract component logic into reusable
+  functions
+</Notes>
 
 ---
 
@@ -312,17 +319,18 @@ Building your own Hooks lets you extract component logic into reusable functions
   steps={[{}, { range: [4, 15] }]}
 />
 
-```notes
+<Notes>
 Here we have a component from a chat application that displays a message indicitaing whether a friend is online or offline.
 
 (highlight code) We can see the use of both the useState hook and useEffect hooks to keep track of whether the friend is online and subscribe to updates from the chat API respectively.
-```
+
+</Notes>
 
 ---
 
 <CodeSurfer
   code={require('!raw-loader!./src/FriendListItem')}
-  steps={[{}, { range: [4, 15], notes: '😭 duplicate code' }]}
+  steps={[{}, { range: [4, 15] }]}
 />
 
 <Notes>
@@ -489,13 +497,29 @@ Returns a stateful value, and a function to update it.
   </p>
   <p>
     <strong>Note:</strong>
-<p>Unlike the setState method found in class components, useState does not automatically merge update objects. You can replicate this behavior by combining the function updater form with object spread syntax or Object.assign</p>
-<p>Another option is useReducer, which is more suited for managing state objects that contain multiple sub-values.</p>
-</p>
-<strong>Lazy initial state</strong>
-<p>The initialState argument is the state used during the initial render. In subsequent renders, it is disregarded. If the initial state is the result of an expensive computation, you may provide a function instead, which will be executed only on the initial render:</p>
-<strong>Bailing out of a state update</strong>
-<p>If you update a State Hook to the same value as the current state, React will bail out without rendering the children or firing effects</p>
+    <p>
+      Unlike the setState method found in class components, useState does not
+      automatically merge update objects. You can replicate this behavior by
+      combining the function updater form with object spread syntax or
+      Object.assign
+    </p>
+    <p>
+      Another option is useReducer, which is more suited for managing state
+      objects that contain multiple sub-values.
+    </p>
+  </p>
+  <strong>Lazy initial state</strong>
+  <p>
+    The initialState argument is the state used during the initial render. In
+    subsequent renders, it is disregarded. If the initial state is the result of
+    an expensive computation, you may provide a function instead, which will be
+    executed only on the initial render:
+  </p>
+  <strong>Bailing out of a state update</strong>
+  <p>
+    If you update a State Hook to the same value as the current state, React
+    will bail out without rendering the children or firing effects
+  </p>
 </Notes>
 
 ---
@@ -507,68 +531,135 @@ Returns a stateful value, and a function to update it.
 Accepts a function that contains imperative, possibly effectful code.
 
 <Notes>
-<p>Accepts a function that contains imperative, possibly effectful code.</p>
-<p>Mutations, subscriptions, timers, logging, and other side effects are not allowed inside the main body of a function component (referred to as React’s render phase). Doing so will lead to confusing bugs and inconsistencies in the UI.</p>
-<p>Instead, use <code>useEffect</code>. The function passed to useEffect will run after the render is committed to the screen. Think of effects as an escape hatch from React’s purely functional world into the imperative world.</p>
-<p>By default, effects run after every completed render, but you can choose to fire it only when certain values have changed.</p>
-<strong>Cleaning up an effect</strong>
-<p>Often, effects create resources that need to be cleaned up before the component leaves the screen, such as a subscription or timer ID. To do this, the function passed to useEffect may return a clean-up function</p>
-<p><strong>Timing of effects</strong>
-<p>Unlike componentDidMount and componentDidUpdate, the function passed to useEffect fires after layout and paint, during a deferred event.</p>
-<p>For effects that cannot be deferred, for example a DOM mutation that is visible to the user, React provides one additional Hook called useLayoutEffect. It has the same signature as useEffect, and only differs in when it is fired.</p>
-<p>Although useEffect is deferred until after the browser has painted, it’s guaranteed to fire before any new renders. React will always flush a previous render’s effects before starting a new update.</p>
-</p>
+  <p>Accepts a function that contains imperative, possibly effectful code.</p>
+  <p>
+    Mutations, subscriptions, timers, logging, and other side effects are not
+    allowed inside the main body of a function component (referred to as React’s
+    render phase). Doing so will lead to confusing bugs and inconsistencies in
+    the UI.
+  </p>
+  <p>
+    Instead, use <code>useEffect</code>. The function passed to useEffect will
+    run after the render is committed to the screen. Think of effects as an
+    escape hatch from React’s purely functional world into the imperative world.
+  </p>
+  <p>
+    By default, effects run after every completed render, but you can choose to
+    fire it only when certain values have changed.
+  </p>
+  <strong>Cleaning up an effect</strong>
+  <p>
+    Often, effects create resources that need to be cleaned up before the
+    component leaves the screen, such as a subscription or timer ID. To do this,
+    the function passed to useEffect may return a clean-up function
+  </p>
+  <p>
+    <strong>Timing of effects</strong>
+    <p>
+      Unlike componentDidMount and componentDidUpdate, the function passed to
+      useEffect fires after layout and paint, during a deferred event.
+    </p>
+    <p>
+      For effects that cannot be deferred, for example a DOM mutation that is
+      visible to the user, React provides one additional Hook called
+      useLayoutEffect. It has the same signature as useEffect, and only differs
+      in when it is fired.
+    </p>
+    <p>
+      Although useEffect is deferred until after the browser has painted, it’s
+      guaranteed to fire before any new renders. React will always flush a
+      previous render’s effects before starting a new update.
+    </p>
+  </p>
 </Notes>
 
 ---
 
-<CodeSurfer title={() => (<Heading2>Cleaning up an effect</Heading2>)} code={require('!raw-loader!./src/CleaningUpAnEffect')} />
+<CodeSurfer
+  title={() => <Heading2>Cleaning up an effect</Heading2>}
+  code={require('!raw-loader!./src/CleaningUpAnEffect')}
+/>
 
 <Notes>
-  <p>The clean-up function runs before the component is removed from the UI to prevent memory leaks.</p>
-  <p>Additionally, if a component renders multiple times (as they typically do), the previous effect is cleaned up before executing the next effect. In our example, this means a new subscription is created on every update.</p>
-  </Notes>
+  <p>
+    The clean-up function runs before the component is removed from the UI to
+    prevent memory leaks.
+  </p>
+  <p>
+    Additionally, if a component renders multiple times (as they typically do),
+    the previous effect is cleaned up before executing the next effect. In our
+    example, this means a new subscription is created on every update.
+  </p>
+</Notes>
 
 ---
 
-<CodeSurfer title={() => (<Heading2>Conditionally Firing An Effect</Heading2>)} code={require('!raw-loader!./src/ConditionallyFiringAnEffect')} />
+<CodeSurfer
+  title={() => <Heading2>Conditionally Firing An Effect</Heading2>}
+  code={require('!raw-loader!./src/ConditionallyFiringAnEffect')}
+/>
 
 <Notes>
-  <p>The default behavior for effects is to fire the effect after every completed render. That way an effect is always recreated if one of its inputs changes.</p>
-<p>However, this may be overkill in some cases, like the subscription example from the previous section. We don’t need to create a new subscription on every update, only if the source props has changed.</p>
-<p>To implement this, pass a second argument to useEffect that is the array of values that the effect depends on. Our updated example now looks like this:</p>
-<p>Passing in an empty array [] of inputs tells React that your effect doesn’t depend on any values from the component, so that effect would run only on mount and clean up on unmount; it won’t run on updates.</p>
-<p>
-<strong>Note</strong>
-<p>The array of inputs is not passed as arguments to the effect function. Conceptually, though, that’s what they represent: every value referenced inside the effect function should also appear in the inputs array. In the future, a sufficiently advanced compiler could create this array automatically.</p>
-</p>
-  </Notes>
+  <p>
+    The default behavior for effects is to fire the effect after every completed
+    render. That way an effect is always recreated if one of its inputs changes.
+  </p>
+  <p>
+    However, this may be overkill in some cases, like the subscription example
+    from the previous section. We don’t need to create a new subscription on
+    every update, only if the source props has changed.
+  </p>
+  <p>
+    To implement this, pass a second argument to useEffect that is the array of
+    values that the effect depends on. Our updated example now looks like this:
+  </p>
+  <p>
+    Passing in an empty array [] of inputs tells React that your effect doesn’t
+    depend on any values from the component, so that effect would run only on
+    mount and clean up on unmount; it won’t run on updates.
+  </p>
+  <p>
+    <strong>Note</strong>
+    <p>
+      The array of inputs is not passed as arguments to the effect function.
+      Conceptually, though, that’s what they represent: every value referenced
+      inside the effect function should also appear in the inputs array. In the
+      future, a sufficiently advanced compiler could create this array
+      automatically.
+    </p>
+  </p>
+</Notes>
 
 ---
 
 `useContext`
 
-<CodeSurferCustom code="const context = useContext(Context);"/>
+<CodeSurferCustom code="const context = useContext(Context);" />
 
 Accepts a context object (the value returned from `React.createContext`) and returns the current context value, as given by the nearest context provider for the given context.
 
 <Notes>
-  <p>When the provider updates, this Hook will trigger a rerender with the latest context value.</p>
-  </Notes>
+  <p>
+    When the provider updates, this Hook will trigger a rerender with the latest
+    context value.
+  </p>
+</Notes>
 
 ---
 
 ## Additional Hooks
 
-```notes
-The following Hooks are either variants of the basic ones from the previous section, or only needed for specific edge cases. Don’t stress about learning them up front.
-```
+<Notes>
+  The following Hooks are either variants of the basic ones from the previous
+  section, or only needed for specific edge cases. Don’t stress about learning
+  them up front.
+</Notes>
 
 ---
 
 `useReducer`
 
-<CodeSurferCustom code="const [state, dispatch] = useReducer(reducer, initialArg, init);"/>
+<CodeSurferCustom code="const [state, dispatch] = useReducer(reducer, initialArg, init);" />
 
 Accepts a reducer of type `(state, action) => newState`, and returns the current state paired with a dispatch method. (If you’re familiar with Redux, you already know how this works.)
 
@@ -576,14 +667,16 @@ Accepts a reducer of type `(state, action) => newState`, and returns the current
 
 `useCallback`
 
-<CodeSurferCustom code={`
+<CodeSurferCustom
+  code={`
 const memoizedCallback = useCallback(
   () => {
     doSomething(a, b);
   },
   [a, b],
 );
-`} />
+`}
+/>
 
 Returns a memoized callback.
 

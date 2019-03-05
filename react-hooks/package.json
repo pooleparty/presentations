@@ -6,11 +6,14 @@
     "mdx-deck": "^1.10.0",
     "mdx-deck-code-surfer": "^0.5.5",
     "prism-react-renderer": "^0.1.6",
+    "raw-loader": "^1.0.0",
     "styled-components": "^4.1.3"
   },
   "scripts": {
     "start": "mdx-deck deck.mdx",
-    "build": "mdx-deck build deck.mdx -d . --no-html"
+    "prebuild": "rimraf ../public/react-hooks && mkdir -p ../public/react-hooks",
+    "build": "mdx-deck build deck.mdx -d . --no-html",
+    "postbuild": "cp -r images ../public/react-hooks/images && cp ./{index.html,main.js,favicon.ico} ../public/react-hooks"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -20,9 +23,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "devDependencies": {
-    "mdx-deck-live-code": "^1.0.1",
-    "raw-loader": "^1.0.0"
-  }
+  ]
 }
