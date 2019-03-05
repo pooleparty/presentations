@@ -1,0 +1,12 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "build": "NODE_ENV=production lerna run build",
+    "postbuild": "cp ./index.html ./public"
+  },
+  "devDependencies": {
+    "lerna": "^3.13.1",
+    "rimraf": "^2.6.3"
+  }
+}

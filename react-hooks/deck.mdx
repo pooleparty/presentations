@@ -1,0 +1,734 @@
+import { CodeSurfer } from 'mdx-deck-code-surfer';
+import { Head, Appear, Notes, components as mdxDeckComponents } from 'mdx-deck';
+import { Split, Horizontal } from 'mdx-deck/layouts';
+import { future } from 'mdx-deck/themes';
+import styled from 'styled-components';
+import codeSurferTheme from 'prism-react-renderer/themes/vsDarkPlus';
+import {
+  BackgroundImage,
+  CodeSurferCustom,
+  CodeSurferSplit,
+} from './src/presentation-components';
+
+export const { h3: Heading3, h2: Heading2, a: Anchor } = mdxDeckComponents;
+export { components } from 'mdx-deck-code-surfer';
+export const theme = {
+  ...future,
+  codeSurfer: {
+    ...codeSurferTheme,
+    plain: {
+      background: future.colors.background,
+    },
+  },
+};
+
+<Head>
+  <title>React Hooks</title>
+  <link rel="shortcut icon" type="image/ico" href="/favicon.ico" />
+</Head>
+
+<BackgroundImage src="images/hook.png" />
+
+# React Hooks
+
+---
+
+## What is a Hook?
+
+<dl>
+  <Appear>
+    <dd>
+      <em>(noun)</em> a piece of metal or other material, curved or bent back at
+      an angle, for catching hold of or hanging things on.
+    </dd>
+    <dd>
+      <em>(verb)</em> to seize, fasten, suspend from, pierce, or catch hold of
+      and draw with or as if with a hook
+    </dd>
+  </Appear>
+</dl>
+
+---
+
+export const InsertReactImage = styled.img`
+  position: absolute;
+  top: -80px;
+  left: -140px;
+`;
+
+<Heading2>
+  What is a{' '}
+  <span style={{ position: 'relative' }}>
+    Hook?
+    <InsertReactImage src="./images/insertReact.png" />
+  </span>
+</Heading2>
+
+<dl>
+  <Appear>
+    <dd>
+      <em>(noun)</em> a function that let you “hook into” React state and
+      lifecycle features from function components.
+    </dd>
+  </Appear>
+</dl>
+
+<Notes>
+  <p>
+    Hooks are functions that let you “hook into” React state and lifecycle
+    features from function components.
+  </p>
+  <p>
+    Hooks don’t work inside classes — they let you use React without classes.
+    (We don’t recommend rewriting your existing components overnight but you can
+    start using Hooks in the new ones if you’d like.)
+  </p>
+  <p>
+    React provides a few built-in Hooks and you can also create your own Hooks
+    to reuse stateful behavior between different components.
+  </p>
+  <p>
+    Starting with 16.8.0, React includes a stable implementation of React Hooks
+    for:
+  </p>
+  <ul>
+    <li>React DOM</li>
+    <li>React DOM Server</li>
+    <li>React Test Renderer</li>
+    <li>React Shallow Renderer</li>
+  </ul>
+  <em>
+    Note that to enable Hooks, all React packages need to be 16.8.0 or higher.
+    Hooks won’t work if you forget to update, for example, React DOM.
+  </em>
+</Notes>
+
+---
+
+## What problems does Hooks solve?
+
+---
+
+### It’s hard to reuse stateful logic between components
+
+<Notes>
+  React doesn’t offer a way to “attach” reusable behavior to a component (for
+  example, connecting it to a store). If you’ve worked with React for a while,
+  you may be familiar with patterns like render props and higher-order
+  components that try to solve this. But these patterns require you to
+  restructure your components when you use them, which can be cumbersome and
+  make code harder to follow. If you look at a typical React application in
+  React DevTools, you will likely find a “wrapper hell” of components surrounded
+  by layers of providers, consumers, higher-order components, render props, and
+  other abstractions. While we could filter them out in DevTools, this points to
+  a deeper underlying problem: React needs a better primitive for sharing
+  stateful logic. With Hooks, you can extract stateful logic from a component so
+  it can be tested independently and reused. Hooks allow you to reuse stateful
+  logic without changing your component hierarchy. This makes it easy to share
+  Hooks among many components or with the community.
+</Notes>
+
+---
+
+### Complex components become hard to understand
+
+<Notes>
+  We’ve often had to maintain components that started out simple but grew into
+  an unmanageable mess of stateful logic and side effects. Each lifecycle method
+  often contains a mix of unrelated logic. For example, components might perform
+  some data fetching in componentDidMount and componentDidUpdate. However, the
+  same componentDidMount method might also contain some unrelated logic that
+  sets up event listeners, with cleanup performed in componentWillUnmount.
+  Mutually related code that changes together gets split apart, but completely
+  unrelated code ends up combined in a single method. This makes it too easy to
+  introduce bugs and inconsistencies. In many cases it’s not possible to break
+  these components into smaller ones because the stateful logic is all over the
+  place. It’s also difficult to test them. This is one of the reasons many
+  people prefer to combine React with a separate state management library.
+  However, that often introduces too much abstraction, requires you to jump
+  between different files, and makes reusing components more difficult. To solve
+  this, Hooks let you split one component into smaller functions based on what
+  pieces are related (such as setting up a subscription or fetching data),
+  rather than forcing a split based on lifecycle methods. You may also opt into
+  managing the component’s local state with a reducer to make it more
+  predictable.
+</Notes>
+
+---
+
+### Classes confuse both people and machines
+
+<Notes>
+  In addition to making code reuse and code organization more difficult, we’ve
+  found that classes can be a large barrier to learning React. You have to
+  understand how this works in JavaScript, which is very different from how it
+  works in most languages. You have to remember to bind the event handlers.
+  Without unstable syntax proposals, the code is very verbose. Classes present
+  issues for today’s tools, too. For example, classes don’t minify very well,
+  and they make hot reloading flaky and unreliable. The React team wants to
+  present an API that makes it more likely for code to stay on the optimizable
+  path. To solve these problems, Hooks let you use more of React’s features
+  without classes. Conceptually, React components have always been closer to
+  functions. Hooks embrace functions, but without sacrificing the practical
+  spirit of React. Hooks provide access to imperative escape hatches and don’t
+  require you to learn complex functional or reactive programming techniques.
+</Notes>
+
+**There are no plans to remove classes from React**
+
+---
+
+<CodeSurfer
+  title={() => <Heading3>Increment count class example</Heading3>}
+  code={require('!raw-loader!./src/IncrementCountClassExample')}
+/>
+
+<Notes>
+  Hooks don’t work inside classes. But you can use them instead of writing
+  classes.
+</Notes>
+
+---
+
+<CodeSurfer
+  title={() => <Heading3>Increment count useState example</Heading3>}
+  code={require('!raw-loader!./src/UseStateExample')}
+/>
+
+<Notes>
+  <p>
+    useState is a Hook that lets you add React state to function components.
+  </p>
+  <strong>What does calling useState do?</strong>
+  <p>
+    It declares a “state variable”. Our variable is called count but we could
+    call it anything else, like `banana`.
+  </p>
+  <p>
+    This is a way to “preserve” some values between the function calls —
+    useState is a new way to use the exact same capabilities that `this.state`
+    provides in a class.
+  </p>
+  <strong>What do we pass to useState as an argument?</strong>
+  <p>The only argument to the `useState()` Hook is the initial state.</p>
+  <p>
+    Unlike with classes, the state doesn’t have to be an object. We can keep a
+    number or a string if that’s all we need. In our example, we just want a
+    number for how many times the user clicked, so pass 0 as initial state for
+    our variable. (If we wanted to store two different values in state, we would
+    call useState() twice.)
+  </p>
+  <strong>What does useState return?</strong>
+  <p>
+    It returns a pair of values: the current state and a function that updates
+    it. This is why we write <code>const [count, setCount] = useState()</code>.
+    This is similar to <code>this.state.count</code> and{' '}
+    <code>this.setState</code> in a class, except you get them in a pair. If we
+    want to update the current `count`, we can call `setCount`.
+  </p>
+</Notes>
+
+---
+
+<CodeSurfer
+  title={() => <Heading3>Using multiple state variables</Heading3>}
+  code={require('!raw-loader!./src/MultipleStateVariablesExample')}
+/>
+
+<Notes>
+  <p>You don’t have to use many state variables.</p>
+  <p>
+    State variables can hold objects and arrays just fine, so you can still
+    group related data together.
+  </p>
+  <p>
+    However, unlike <code>this.setState</code> in a class, updating a state
+    variable always replaces it instead of merging it.
+  </p>
+</Notes>
+
+---
+
+<CodeSurfer
+  title={() => <Heading3>useEffect Example</Heading3>}
+  code={require('!raw-loader!./src/UseEffectExample')}
+/>
+
+---
+
+## Rules of Hooks
+
+---
+
+### Only call Hooks at the top level
+
+<Notes>
+  <p>
+    React relies on the order in which Hooks are called so its important to
+    ensure the order of the Hook calls is the same on every render.
+  </p>
+  <p>
+    Don’t call Hooks inside loops, conditions, or nested functions. Instead,
+    always use Hooks at the top level of your React function.
+  </p>
+  <p>
+    By following this rule, you ensure that Hooks are called in the same order
+    each time a component renders. That’s what allows React to correctly
+    preserve the state of Hooks between multiple useState and useEffect calls.
+  </p>
+</Notes>
+
+---
+
+### Only call hooks from React functions
+
+<Appear>
+  <Anchor
+    href="https://www.npmjs.com/package/eslint-plugin-react-hooks"
+    target="_blank"
+  >
+    <pre>eslint-plugin-react-hooks</pre>
+  </Anchor>
+</Appear>
+
+<Notes>
+  <p>Don’t call Hooks from regular JavaScript functions. Instead, you can:</p>
+  <ul>
+    <li>Call Hooks from React function components.</li>
+    <li>Call Hooks from custom Hooks (we’ll learn about them shortly).</li>
+  </ul>
+  <p>
+    By following this rule, you ensure that all stateful logic in a component is
+    clearly visible from its source code.
+  </p>
+</Notes>
+
+---
+
+## Building Your Own Hooks
+
+<Notes>
+  Building your own Hooks lets you extract component logic into reusable
+  functions
+</Notes>
+
+---
+
+<CodeSurfer
+  code={require('!raw-loader!./src/FriendStatus')}
+  steps={[{}, { range: [4, 15] }]}
+/>
+
+<Notes>
+Here we have a component from a chat application that displays a message indicitaing whether a friend is online or offline.
+
+(highlight code) We can see the use of both the useState hook and useEffect hooks to keep track of whether the friend is online and subscribe to updates from the chat API respectively.
+
+</Notes>
+
+---
+
+<CodeSurfer
+  code={require('!raw-loader!./src/FriendListItem')}
+  steps={[{}, { range: [4, 15] }]}
+/>
+
+<Notes>
+  <p>
+    Now let’s say that our chat application also has a contact list, and we want
+    to render names of online users with a green color.
+  </p>
+  <p>
+    (highlight code) We could copy and paste similar logic above into our
+    FriendListItem component but it wouldn’t be ideal
+  </p>
+  <p>
+    Instead, we’d like to share this logic between FriendStatus and
+    FriendListItem.
+  </p>
+  <p>
+    Traditionally in React, we’ve had two popular ways to share stateful logic
+    between components: render props and higher-order components. We will now
+    look at how Hooks solve many of the same problems without forcing you to add
+    more components to the tree.
+  </p>
+</Notes>
+
+---
+
+<CodeSurfer
+  title={() => <Heading3>Extract logic into custom hook</Heading3>}
+  code={require('!raw-loader!./src/useFriendStatus')}
+  steps={[{}, { range: [4, 15] }]}
+/>
+
+<Notes>
+  <p>
+    When we want to share logic between two JavaScript functions, we extract it
+    to a third function. Both components and Hooks are functions, so this works
+    for them too!
+  </p>
+  <p>
+    A custom Hook is a JavaScript function whose name starts with ”use” and that
+    may call other Hooks.
+  </p>
+  <p>
+    (hightlight code) There’s nothing new inside of it — the logic is copied
+    from the components above. Just like in a component, make sure to only call
+    other Hooks unconditionally at the top level of your custom Hook.
+  </p>
+  <p>
+    Unlike a React component, a custom Hook doesn’t need to have a specific
+    signature. We can decide what it takes as arguments, and what, if anything,
+    it should return. Its name should always start with use so that you can tell
+    at a glance that the rules of Hooks apply to it.
+  </p>
+  <p>
+    The purpose of our useFriendStatus Hook is to subscribe us to a friend’s
+    status. This is why it takes friendID as an argument, and returns whether
+    this friend is online.
+  </p>
+</Notes>
+
+---
+
+<CodeSurferSplit
+  title={() => <Heading3>Replace duplicate code with custom hook</Heading3>}
+>
+  <CodeSurfer
+    code={require('!raw-loader!./src/FriendStatusWithHook')}
+    steps={[{}, { lines: [2] }]}
+  />
+  <CodeSurfer
+    code={require('!raw-loader!./src/FriendListItemWithHook')}
+    steps={[{}, { lines: [2] }]}
+  />
+</CodeSurferSplit>
+
+<Notes>
+  <strong>Is this code equivalent to the original examples?</strong>
+  <p>
+    Yes, it works in exactly the same way. You’ll notice we didn’t make any
+    changes to the behavior. All we did was to extract some common code between
+    two functions into a separate function. Custom Hooks are a convention that
+    naturally follows from the design of Hooks, rather than a React feature.
+  </p>
+  <strong>Do I have to name my custom Hooks starting with “use”?</strong>
+  <p>
+    Please do. This convention is very important. Without it, we wouldn’t be
+    able to automatically check for violations of rules of Hooks because we
+    couldn’t tell if a certain function contains calls to Hooks inside of it.
+  </p>
+  <strong>Do two components using the same Hook share state?</strong>
+  <p>
+    No. Custom Hooks are a mechanism to reuse stateful logic (such as setting up
+    a subscription and remembering the current value), but every time you use a
+    custom Hook, all state and effects inside of it are fully isolated.
+  </p>
+  <strong>How does a custom Hook get isolated state?</strong>
+  <p>
+    Each call to a Hook gets isolated state. Because we call useFriendStatus
+    directly, from React’s point of view our component just calls useState and
+    useEffect. And as we learned earlier, we can call useState and useEffect
+    many times in one component, and they will be completely independent.
+  </p>
+</Notes>
+
+---
+
+<CodeSurfer
+  title={() => <Heading3>Passing data Between Hooks</Heading3>}
+  code={require('!raw-loader!./src/ChatRecipientPicker')}
+  steps={[{}, { lines: [8, 9, 13, 16] }]}
+/>
+
+<Notes>
+  <p>
+    Since Hooks are functions, we can pass information between them. To
+    illustrate this, we’ll use another component from our hypothetical chat
+    example. This is a chat message recipient picker that displays whether the
+    currently selected friend is online:
+  </p>
+  <p>
+    We keep the currently chosen friend ID in the recipientID state variable,
+    and update it if the user chooses a different friend in the &lt;select&gt;
+    picker. Because the useState Hook call gives us the latest value of the
+    recipientID state variable, we can pass it to our custom useFriendStatus
+    Hook as an argument.
+  </p>
+  <p>
+    This lets us know whether the currently selected friend is online. If we
+    pick a different friend and update the recipientID state variable, our
+    useFriendStatus Hook will unsubscribe from the previously selected friend,
+    and subscribe to the status of the newly selected one.
+  </p>
+</Notes>
+
+---
+
+## Basic Hooks
+
+---
+
+`useState`
+
+<CodeSurferCustom code="const [state, setState] = useState(initialState);" />
+
+Returns a stateful value, and a function to update it.
+
+<Notes>
+  <p>Returns a stateful value, and a function to update it.</p>
+  <p>
+    During the initial render, the returned state (state) is the same as the
+    value passed as the first argument (initialState).
+  </p>
+  <p>
+    The setState function is used to update the state. It accepts a new state
+    value and enqueues a re-render of the component.
+  </p>
+  <p>
+    During subsequent re-renders, the first value returned by useState will
+    always be the most recent state after applying updates.
+  </p>
+  <p>
+    If the new state is computed using the previous state, you can pass a
+    function to setState. The function will receive the previous value, and
+    return an updated value.
+  </p>
+  <p>
+    <strong>Note:</strong>
+    <p>
+      Unlike the setState method found in class components, useState does not
+      automatically merge update objects. You can replicate this behavior by
+      combining the function updater form with object spread syntax or
+      Object.assign
+    </p>
+    <p>
+      Another option is useReducer, which is more suited for managing state
+      objects that contain multiple sub-values.
+    </p>
+  </p>
+  <strong>Lazy initial state</strong>
+  <p>
+    The initialState argument is the state used during the initial render. In
+    subsequent renders, it is disregarded. If the initial state is the result of
+    an expensive computation, you may provide a function instead, which will be
+    executed only on the initial render:
+  </p>
+  <strong>Bailing out of a state update</strong>
+  <p>
+    If you update a State Hook to the same value as the current state, React
+    will bail out without rendering the children or firing effects
+  </p>
+</Notes>
+
+---
+
+`useEffect`
+
+<CodeSurferCustom code="useEffect(didUpdate);" />
+
+Accepts a function that contains imperative, possibly effectful code.
+
+<Notes>
+  <p>Accepts a function that contains imperative, possibly effectful code.</p>
+  <p>
+    Mutations, subscriptions, timers, logging, and other side effects are not
+    allowed inside the main body of a function component (referred to as React’s
+    render phase). Doing so will lead to confusing bugs and inconsistencies in
+    the UI.
+  </p>
+  <p>
+    Instead, use <code>useEffect</code>. The function passed to useEffect will
+    run after the render is committed to the screen. Think of effects as an
+    escape hatch from React’s purely functional world into the imperative world.
+  </p>
+  <p>
+    By default, effects run after every completed render, but you can choose to
+    fire it only when certain values have changed.
+  </p>
+  <strong>Cleaning up an effect</strong>
+  <p>
+    Often, effects create resources that need to be cleaned up before the
+    component leaves the screen, such as a subscription or timer ID. To do this,
+    the function passed to useEffect may return a clean-up function
+  </p>
+  <p>
+    <strong>Timing of effects</strong>
+    <p>
+      Unlike componentDidMount and componentDidUpdate, the function passed to
+      useEffect fires after layout and paint, during a deferred event.
+    </p>
+    <p>
+      For effects that cannot be deferred, for example a DOM mutation that is
+      visible to the user, React provides one additional Hook called
+      useLayoutEffect. It has the same signature as useEffect, and only differs
+      in when it is fired.
+    </p>
+    <p>
+      Although useEffect is deferred until after the browser has painted, it’s
+      guaranteed to fire before any new renders. React will always flush a
+      previous render’s effects before starting a new update.
+    </p>
+  </p>
+</Notes>
+
+---
+
+<CodeSurfer
+  title={() => <Heading2>Cleaning up an effect</Heading2>}
+  code={require('!raw-loader!./src/CleaningUpAnEffect')}
+/>
+
+<Notes>
+  <p>
+    The clean-up function runs before the component is removed from the UI to
+    prevent memory leaks.
+  </p>
+  <p>
+    Additionally, if a component renders multiple times (as they typically do),
+    the previous effect is cleaned up before executing the next effect. In our
+    example, this means a new subscription is created on every update.
+  </p>
+</Notes>
+
+---
+
+<CodeSurfer
+  title={() => <Heading2>Conditionally Firing An Effect</Heading2>}
+  code={require('!raw-loader!./src/ConditionallyFiringAnEffect')}
+/>
+
+<Notes>
+  <p>
+    The default behavior for effects is to fire the effect after every completed
+    render. That way an effect is always recreated if one of its inputs changes.
+  </p>
+  <p>
+    However, this may be overkill in some cases, like the subscription example
+    from the previous section. We don’t need to create a new subscription on
+    every update, only if the source props has changed.
+  </p>
+  <p>
+    To implement this, pass a second argument to useEffect that is the array of
+    values that the effect depends on. Our updated example now looks like this:
+  </p>
+  <p>
+    Passing in an empty array [] of inputs tells React that your effect doesn’t
+    depend on any values from the component, so that effect would run only on
+    mount and clean up on unmount; it won’t run on updates.
+  </p>
+  <p>
+    <strong>Note</strong>
+    <p>
+      The array of inputs is not passed as arguments to the effect function.
+      Conceptually, though, that’s what they represent: every value referenced
+      inside the effect function should also appear in the inputs array. In the
+      future, a sufficiently advanced compiler could create this array
+      automatically.
+    </p>
+  </p>
+</Notes>
+
+---
+
+`useContext`
+
+<CodeSurferCustom code="const context = useContext(Context);" />
+
+Accepts a context object (the value returned from `React.createContext`) and returns the current context value, as given by the nearest context provider for the given context.
+
+<Notes>
+  <p>
+    When the provider updates, this Hook will trigger a rerender with the latest
+    context value.
+  </p>
+</Notes>
+
+---
+
+## Additional Hooks
+
+<Notes>
+  The following Hooks are either variants of the basic ones from the previous
+  section, or only needed for specific edge cases. Don’t stress about learning
+  them up front.
+</Notes>
+
+---
+
+`useReducer`
+
+<CodeSurferCustom code="const [state, dispatch] = useReducer(reducer, initialArg, init);" />
+
+Accepts a reducer of type `(state, action) => newState`, and returns the current state paired with a dispatch method. (If you’re familiar with Redux, you already know how this works.)
+
+---
+
+`useCallback`
+
+<CodeSurferCustom
+  code={`
+const memoizedCallback = useCallback(
+  () => {
+    doSomething(a, b);
+  },
+  [a, b],
+);
+`}
+/>
+
+Returns a memoized callback.
+
+---
+
+`useMemo`
+
+<CodeSurferCustom code="const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);" />
+
+Returns a memoized value.
+
+---
+
+`useRef`
+
+<CodeSurferCustom code="const refContainer = useRef(initialValue);" />
+
+Returns a mutable ref object whose `.current` property is initialized to the passed argument (`initialValue`).
+The returned object will persist for the full lifetime of the component.
+
+---
+
+`useImperativeHandle`
+
+<CodeSurferCustom code="useImperativeHandle(ref, createHandle, [inputs])" />
+
+Customizes the instance value that is exposed to parent components when using `ref`.
+
+---
+
+`useLayoutEffect`
+
+<CodeSurferCustom code="useLayoutEffect(didUpdate);" />
+
+The signature is identical to `useEffect`, but it fires synchronously after all DOM mutations.
+
+---
+
+`useDebugValue`
+
+<CodeSurferCustom code="useDebugValue(value)" />
+
+Can be used to display a label for custom hooks in React DevTools.
+
+---
+
+## Resources
+
+[Intro to Hooks](https://reactjs.org/docs/hooks-intro.html)
+
+[ReactConf presentation on Hooks](https://www.youtube.com/watch?v=dpw9EHDh2bM)
+
+---
+
+## Questions?
