@@ -12,6 +12,6 @@
     "start": "mdx-deck deck.mdx",
     "prebuild": "rimraf ../public/react-hooks && mkdir -p ../public/react-hooks",
     "build": "mdx-deck build deck.mdx --no-html",
-    "postbuild": "cp -r images dist && cp -r dist/ ../public/react-hooks"
+    "postbuild": "cp -r images dist && cp -r dist/* ../public/react-hooks && ls -l ../public/react-hooks"
   }
 }
