@@ -2,6 +2,7 @@
   "name": "root",
   "private": true,
   "scripts": {
+    "prebuild": "lerna bootstrap",
     "build": "NODE_ENV=production lerna run build",
     "postbuild": "cp ./index.html ./public"
   },
