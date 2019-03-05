@@ -4,7 +4,7 @@
   "scripts": {
     "prebuild": "lerna bootstrap",
     "build": "NODE_ENV=production lerna run build",
-    "postbuild": "cp ./index.html ./public"
+    "postbuild": "cp ./index.html ./public && ls -l ./public"
   },
   "devDependencies": {
     "lerna": "^3.13.1",
