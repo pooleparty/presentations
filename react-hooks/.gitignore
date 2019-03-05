@@ -23,5 +23,4 @@ yarn-debug.log*
 yarn-error.log*
 
 # Built presentation files
-index.html
-main.js
+dist

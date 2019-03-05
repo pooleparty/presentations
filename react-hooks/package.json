@@ -1,7 +1,6 @@
 {
   "name": "react-hooks",
   "version": "0.1.0",
-  "private": true,
   "dependencies": {
     "mdx-deck": "^1.10.0",
     "mdx-deck-code-surfer": "^0.5.5",
@@ -12,16 +11,7 @@
   "scripts": {
     "start": "mdx-deck deck.mdx",
     "prebuild": "rimraf ../public/react-hooks && mkdir -p ../public/react-hooks",
-    "build": "mdx-deck build deck.mdx -d . --no-html",
-    "postbuild": "cp -r images ../public/react-hooks/images && cp ./{index.html,main.js,favicon.ico} ../public/react-hooks"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+    "build": "mdx-deck build deck.mdx --no-html",
+    "postbuild": "cp -r images dist && cp -r dist/ ../public/react-hooks"
+  }
 }
