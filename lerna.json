@@ -1,6 +1,7 @@
 {
   "packages": [
-    "react-hooks"
+    "react-hooks",
+    "graphql-workshop"
   ],
   "version": "0.0.0"
 }

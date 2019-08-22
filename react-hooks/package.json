@@ -10,7 +10,8 @@
   },
   "scripts": {
     "start": "mdx-deck deck.mdx",
-    "prebuild": "rimraf ../public/react-hooks && mkdir -p ../public/react-hooks",
+    "clean": "rimraf dist && rimraf ../public/react-hooks && mkdir -p ../public/react-hooks",
+    "prebuild": "npm run clean",
     "build": "mdx-deck build deck.mdx --no-html",
     "postbuild": "cp -r images dist && cp -r dist/* ../public/react-hooks && ls -l ../public/react-hooks"
   }

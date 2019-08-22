@@ -1,0 +1,14 @@
+{
+  book(id: "2") {
+    name
+    genre
+    reviews
+    author {
+      name
+      bio
+      books {
+        name
+      }
+    }
+  }
+}
