@@ -1,0 +1,370 @@
+import { Appear, Head, Notes, Image } from 'mdx-deck';
+import { Split } from 'mdx-deck/layouts';
+import { CodeSurfer } from 'mdx-deck-code-surfer';
+import nightOwl from 'prism-react-renderer/themes/nightOwl';
+import { Layout, LayoutNoFooter, BGImage } from './src';
+
+export { default as theme } from './src';
+
+<Head>
+  <title>GraphQL Workshop</title>
+  <link rel="shortcut icon" type="image/ico" href="/graphql/favicon.ico" />
+</Head>
+
+export default Layout;
+
+<h1>GraphQL</h1>
+
+---
+
+export default Layout;
+
+<h2>What is GraphQL?</h2>
+
+---
+
+export default Layout;
+
+<Image src={require('file-loader!./images/graphql.png')} />
+
+<Notes>
+  GraphQL is:
+  <ul>
+    <li>
+      a specification for a query language for APIs and server side runtime to
+      execute them
+    </li>
+    <li>language agnostic</li>
+    <li>database agnostic</li>
+    <li>transport layer agnostic</li>
+  </ul>
+  The original Facebook implementation is in Node
+</Notes>
+
+---
+
+export default Layout;
+
+## A Comparison
+
+<table border="1" cellpadding="10">
+  <thead>
+    <th>REST</th>
+    <th>GraphQL</th>
+  </thead>
+  <tbody>
+    <Appear>
+      <tr>
+        <td>dumb endpoints return predefined static structures of data</td>
+        <td>
+          single smart endpoint that handles the fetching of data to build a
+          highly customized response
+        </td>
+      </tr>
+      <tr>
+        <td>under/over fetching of data</td>
+        <td>declarative data fetching</td>
+      </tr>
+      <tr>
+        <td>documentation = extra work</td>
+        <td>documentation = automatic</td>
+      </tr>
+    </Appear>
+  </tbody>
+</table>
+
+<Notes>
+  <h2>Endpoints</h2>
+  <p>
+    In REST, you have a bunch of dumb endpoints which return predefined static
+    structures of data. However, in GraphQL, you have ONE (!) smart endpoint
+    where you send all your queries and let GraphQL handle the fetching of data
+    to build a highly customized response, just for you.
+  </p>
+  <h2>Data Fetching</h2>
+  <p>
+    In REST, we often end up compromising by using an existing API and only
+    picking out certain fields to use. This doesn’t sound too bad until you
+    calculate the amount of unused data that is sent over the network. This can
+    reduce performance over time, especially in mobile apps.
+  </p>
+  <p>
+    No more under fetching or over fetching of data! We all know the pain of
+    updating the view and then realizing that we need more/less data from the
+    back-end. Off we go tapping the shoulder of a back-end developer to modify
+    an existing API or create a new one.
+  </p>
+  <p>
+    GraphQL enables rapid product iterations since front end and back end
+    developers can work independently. Moreover, consider the quality of
+    analytics. With REST, we know which APIs are most used, but we have no idea
+    which fields are. In GraphQL, we have analytics for every field.
+  </p>
+  <h2>Documentation</h2>
+  <p>
+    With REST, adding documentation to an API is normall a manual process of
+    annotating endpoints. With GraphQL, since you have to define your schema,
+    graphql uses that to create automation documentation for you API
+  </p>
+</Notes>
+
+---
+
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  code={`
+GET /api/book/:id
+GET /api/author/:id
+GET /api/author/:id/books
+`}
+/>
+
+<Notes>
+  Typically, if you wanted to fetch data from an API that holds book
+  information, you would have a specific endpoint or URL that you are hitting,
+  in this case it would be, exampleURL.com/book/:id. What would be returned is a
+  title, a genre, and maybe some reviews. Now, if you wanted to pull in some
+  data about an author you would have to make another request to another
+  endpoint, exampleURL.com/author/:id, this would return an author name, age,
+  biography, and BookIds. Lastly, if you wanted to receive information about
+  books specific to an author other you would have to make another request. As
+  you can see, we’ve already made three requests to receive basic information.
+</Notes>
+
+---
+
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  language="graphql"
+  code={`{
+  book(id: "2") {
+    name
+    author {
+      name
+      books {
+        name
+      }
+    }
+  }
+}`}
+/>
+
+---
+
+export default Layout;
+
+## Building blocks of GraphQL
+
+1. Queries
+2. Schema
+3. Resolvers
+
+---
+
+export default Layout;
+
+## Queries
+
+Clients send these to specify the data they need (query) or action to perform (mutation or subscription)
+
+<Notes>
+  "Queries" is an umbrella term for query (fetch data), mutation (modify data)
+  and subscription (subscribe to events such as creation of a particular
+  record).
+</Notes>
+
+---
+
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  title="Example Query"
+  language="graphql"
+  code={require('!raw-loader!./src/query.graphql')}
+/>
+
+---
+
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  title="Example Query Response"
+  language="json"
+  code={require('!raw-loader!./src/response.js')}
+/>
+
+---
+
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  title="Example Mutation"
+  language="graphql"
+  code={require('!raw-loader!./src/mutation.graphql')}
+/>
+
+<Notes>
+  <p>
+    In REST, any request might end up causing some side-effects on the server,
+    but by convention it's suggested that one doesn't use GET requests to modify
+    data.
+  </p>
+  <p>
+    GraphQL is similar - technically any query could be implemented to cause a
+    data write. However, it's useful to establish a convention that any
+    operations that cause writes should be sent explicitly via a mutation.
+  </p>
+  <p>
+    Just like in queries, if the mutation field returns an object type, you can
+    ask for nested fields. This can be useful for fetching the new state of an
+    object after an update.
+  </p>
+  <p>
+    In this example, the id, name, and genre of the newly created book will be
+    returned
+  </p>
+</Notes>
+
+---
+
+export default Layout;
+
+[GraphQL.org blog post on subscriptions](https://graphql.org/blog/subscriptions-in-graphql-and-relay/)
+
+---
+
+export default Layout;
+
+## Schema
+
+contract for client-server communication
+
+<Notes>
+  <ul>
+    <li>
+      Specifies what queries clients are allowed to make, the types of data that
+      can be fetched and relationships between types.
+    </li>
+    <li>Defined using GraphQL’s Schema Definition Language (SDL).</li>
+  </ul>
+</Notes>
+
+---
+
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  language="graphql"
+  code={require('!raw-loader!./src/schema.graphql')}
+/>
+
+---
+
+export default Layout;
+
+## Resolvers
+
+Every field has a resolver function, which specifies how that field is connected to the back end and fetches data for that field from a database(s)/ microservice/ existing API.
+
+---
+
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  language="javascript"
+  code={require('!raw-loader!./src/resolver.js')}
+/>
+
+<Notes>
+  This example is written in JavaScript, however GraphQL servers can be built in
+  many different languages.
+  <strong>A resolver function receives four arguments:</strong>
+  <ul>
+    <li>
+      obj The previous object, which for a field on the root Query type is often
+      not used.
+    </li>
+    <li>args The arguments provided to the field in the GraphQL query.</li>
+    <li>
+      context A value which is provided to every resolver and holds important
+      contextual information like the currently logged in user, or access to a
+      database.
+    </li>
+    <li>
+      info A value which holds field-specific information relevant to the
+      current query as well as the schema details, also refer to type
+      GraphQLResolveInfo for more details.
+    </li>
+  </ul>
+</Notes>
+
+---
+
+export default Layout;
+
+## Protecting your API
+
+<Notes>
+  <p>
+    You may be saying to yourself, "hang on a second, what prevents a user from
+    querying for passwords, or other sensitive data?". Simple, just don't expose
+    that data in your schema and users will not be able to query for it.
+  </p>
+  <p>
+    The schema and resolvers make sure that you are only letting clients query
+    data that YOU are comfortable sharing. Using GraphQL doesn’t mean clients
+    can ask for anything and receive it, which is a common misconception.
+  </p>
+  <p>
+    You can protect your server by using techniques such as timeouts, specifying
+    a maximum query depth and throttling based on server time and query
+    complexity.
+  </p>
+  <p>
+    GraphQL is a lot like life. You have the freedom to ask for anything, but
+    you don’t always get it.
+  </p>
+</Notes>
+
+---
+
+export default Layout;
+
+## Awesome Community
+
+<Notes>
+<p>
+  tons of documentation and tutorials
+</p>
+<p>
+  clients like Apollo Client or Facebook’s Relay provide advanced features such as caching, pre-fetching and more
+</p>
+</Notes>
+---
+
+export default Layout;
+
+## Resources
+
+[GraphQL.org](https://graphql.org/learn)
+
+[Apollo GraphQL](https://www.apollographql.com/)
+
+[Wes Bos Advanced React & GraphQL Course](https://advancedreact.com/)
+
+---
+
+export default Layout;
+
+## Over to Geoff with a real live GraphQL application
+
+<img src={require('file-loader!./images/spinningparrot.gif')} />

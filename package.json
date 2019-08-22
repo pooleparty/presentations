@@ -2,8 +2,9 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "prebuild": "lerna bootstrap",
+    "prebuild": "lerna bootstrap && npm run clean",
     "build": "NODE_ENV=production lerna run build",
+    "clean": "NODE_ENV=production lerna run clean",
     "postbuild": "cp ./index.html ./public && ls -l ./public"
   },
   "devDependencies": {

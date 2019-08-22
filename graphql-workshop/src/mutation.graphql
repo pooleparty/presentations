@@ -1,0 +1,7 @@
+{
+  creatBook(book: BookInput!) {
+    id
+    name
+    genre
+  }
+}

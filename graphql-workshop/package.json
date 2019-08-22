@@ -1,0 +1,25 @@
+{
+  "name": "graphql-workshop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "mdx-deck deck.mdx",
+    "clean": "rimraf dist && rimraf ../public/graphql && mkdir -p ../public/graphql",
+    "prebuild": "npm run clean",
+    "build": "mdx-deck build deck.mdx --no-html",
+    "postbuild": "cp images/favicon.ico dist && cp -r dist/* ../public/graphql && ls -l ../public/graphql"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "file-loader": "^4.2.0",
+    "mdx-deck": "^1.10.2",
+    "mdx-deck-code-surfer": "^0.5.5",
+    "prism-react-renderer": "^0.1.6",
+    "raw-loader": "^1.0.0",
+    "react-syntax-highlighter": "^11.0.2",
+    "styled-components": "^4.3.2"
+  }
+}
