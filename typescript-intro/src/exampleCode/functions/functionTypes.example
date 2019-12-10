@@ -1,0 +1,12 @@
+// Named function with types
+function add(x: number, y: number): number {
+    return x + y;
+}
+
+// Anonymous function with types
+let myAdd = function(x: number, y: number): number {
+    return x + y;
+};
+
+// Arrow function with types
+let myAddArrow = (x: number, y: number): number => x + y;

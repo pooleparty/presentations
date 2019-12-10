@@ -1,0 +1,56 @@
+@keyframes crazy {
+  0% {
+    font-size: 4.5rem;
+    transform: rotate(25deg);
+  }
+  20% {
+    --color: #f8f58a;
+  }
+  40% {
+    --color: #86fe89;
+  }
+  60% {
+    --color: #89fdfe;
+  }
+  80% {
+    --color: #ef696a;
+  }
+  100% {
+    font-size: 5.5rem;
+    transform: rotate(-25deg);
+  }
+}
+
+@keyframes crazy-border {
+  0% {
+    background-position: 0px 0px, 100% 100%, 0px 100%, 100% -100%;
+  }
+  100% {
+    background-position: 50% 0px, 50% 100%, 0px -100%, 100% 100%;
+  }
+}
+
+.crazy-heading__container {
+  --color: #f068f8;
+  text-transform: capitalize;
+  background: rgba(0, 0, 0, 0.85);
+  animation: crazy 750ms;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
+h1.crazy-title {
+  color: var(--color);
+  padding: 2rem 0;
+  font-size: inherit;
+  animation: crazy-border 2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  background: linear-gradient(90deg, var(--color) 50%, transparent 50%),
+    linear-gradient(90deg, var(--color) 50%, transparent 50%),
+    linear-gradient(0deg, var(--color) 50%, transparent 50%),
+    linear-gradient(0deg, var(--color) 50%, transparent 50%);
+  background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  background-size: 20px 6px, 20px 6px, 6px 20px, 6px 20px;
+}

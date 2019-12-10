@@ -1,0 +1,32 @@
+{
+  "name": "typescript-intro",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "lodash.merge": "^4.6.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "spectacle-scripts": "2.4.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "clean": "rm -rf build && rm -rf ../public/intro-to-typescript && mkdir -p ../public/intro-to-typescript",
+    "prebuild": "npm run clean",
+    "build": "react-scripts build",
+    "postbuild": "cp -r build/* ../public/intro-to-typescript && ls -l ../public/intro-to-typescript"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "raw-loader": "^4.0.0"
+  }
+}

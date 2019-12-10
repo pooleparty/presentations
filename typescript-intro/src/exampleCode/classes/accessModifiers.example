@@ -1,0 +1,6 @@
+// Can be accessed from outside containing class
+public name: string;
+// Can be accessed only from inside containing class
+private name: string;
+// Can be accessed from containing and derived classes
+protected name: string;
