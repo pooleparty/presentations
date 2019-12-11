@@ -12,8 +12,7 @@
     "start": "react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "clean": "rm -rf build && rm -rf ../public/intro-to-typescript && mkdir -p ../public/intro-to-typescript",
-    "prebuild": "npm run clean",
+    "clean": "rimraf build && rimraf ../public/intro-to-typescript && mkdir -p ../public/intro-to-typescript",
     "build": "react-scripts build",
     "postbuild": "cp -r build/* ../public/intro-to-typescript && ls -l ../public/intro-to-typescript"
   },
