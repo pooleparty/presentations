@@ -7,6 +7,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "reveal-md": "^2.4.0"
+    "reveal-md": "^5.4.0"
   }
 }
